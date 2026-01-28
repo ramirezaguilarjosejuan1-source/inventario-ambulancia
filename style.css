@@ -101,3 +101,52 @@ canvas{
   h2{ font-size:16px; }
   button{ font-size:15px; }
 }
+
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#c62828;
+  padding:10px 12px;
+  border-radius:0 0 18px 18px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+.header img{
+  height:45px;
+}
+
+.logo{
+  margin-left:5px;
+}
+
+.ambulancia{
+  margin-right:5px;
+}
+
+.titulo{
+  text-align:center;
+  color:white;
+  flex:1;
+}
+
+.titulo h1{
+  font-size:18px;
+  margin:0;
+}
+
+.titulo span{
+  font-size:13px;
+  font-weight:300;
+}
+
+/* Ajuste móvil */
+@media (max-width:480px){
+  .header img{
+    height:38px;
+  }
+  .titulo h1{
+    font-size:16px;
+  }
+}
