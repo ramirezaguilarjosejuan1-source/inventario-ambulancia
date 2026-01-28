@@ -150,3 +150,23 @@ canvas{
     font-size:16px;
   }
 }
+
+
+body{
+  margin:0;
+  padding:0;
+  background:#f4f4f4;
+}
+
+.container{
+  padding:10px;
+}
+
+input, select{
+  margin-bottom:6px;
+}
+
+label{
+  font-size:14px;
+}
+
