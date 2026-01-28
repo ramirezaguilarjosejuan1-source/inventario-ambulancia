@@ -1,84 +1,103 @@
+/* === GENERAL === */
 body{
-  font-family: system-ui, Arial;
-  background:#f4f6f8;
-  padding:12px;
+  margin:0;
+  padding:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:
+    linear-gradient(rgba(255,255,255,0.92),rgba(255,255,255,0.92)),
+    url("fondo.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
+/* === CONTENEDOR PRINCIPAL === */
+.container{
+  max-width: 420px;
+  margin: auto;
+  padding: 12px;
+}
+
+/* === TARJETAS === */
+.section{
+  background:#ffffff;
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:12px;
+  box-shadow:0 3px 6px rgba(0,0,0,0.15);
+  border-left:6px solid #c62828;
+}
+
+/* === TITULOS === */
 h1{
   text-align:center;
+  color:#c62828;
+  margin-bottom:6px;
 }
 
 h2{
-  background:#e3e9ef;
-  padding:6px;
-  border-radius:6px;
-  margin-top:16px;
+  margin:0 0 6px 0;
+  font-size:17px;
+  color:#b71c1c;
 }
 
-.card{
-  background:white;
-  padding:10px;
-  border-radius:8px;
-  margin-bottom:12px;
+/* === TEXTO === */
+p{
+  margin:6px 0;
+  font-size:14px;
+  text-align:center;
 }
 
-.fila{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:white;
-  padding:6px;
-  margin:4px 0;
-  border-radius:6px;
-}
-
-label{
-  width:65%;
+/* === INPUTS === */
+input, select{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+  margin-bottom:6px;
+  border-radius:10px;
+  border:1px solid #ccc;
   font-size:14px;
 }
 
-input,select{
-  width:30%;
+/* === CHECKBOX === */
+label{
+  font-size:14px;
 }
 
+/* === BOTONES === */
 button{
   width:100%;
-  padding:10px;
-  margin:6px 0;
+  background:#c62828;
+  color:white;
   border:none;
-  border-radius:8px;
-  font-size:15px;
-}
-
-.acciones button:nth-child(1){ background:#cce5ff; }
-.acciones button:nth-child(2){ background:#f8d7da; }
-.acciones button:nth-child(3){ background:#d4edda; }
-
-body{
-  background: linear-gradient(135deg,#e0f7fa,#ffffff);
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.container{
-  background:#ffffff;
-  border-radius:15px;
-  padding:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.15);
-}
-
-h2{
-  text-align:center;
-}
-
-.section{
-  margin-bottom:20px;
-  padding:10px;
-  border-left:5px solid #00acc1;
-  background:#f9f9f9;
-  border-radius:10px;
-}
-
-button{
-  border-radius:12px;
+  padding:12px;
+  margin-top:8px;
+  border-radius:14px;
   font-size:16px;
+  font-weight:bold;
+}
+
+button:active{
+  background:#b71c1c;
+}
+
+/* === FIRMA === */
+canvas{
+  width:100%;
+  height:150px;
+  border:2px dashed #c62828;
+  border-radius:12px;
+  background:#fff;
+}
+
+/* === HISTORIAL === */
+#historial .section{
+  border-left:6px solid #2e7d32;
+}
+
+/* === MÓVIL AJUSTES === */
+@media (max-width:480px){
+  h1{ font-size:22px; }
+  h2{ font-size:16px; }
+  button{ font-size:15px; }
 }
