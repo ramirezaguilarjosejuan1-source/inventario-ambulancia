@@ -85,3 +85,42 @@ select, input{
   z-index:100;
   box-shadow:0 3px 6px rgba(0,0,0,0.25);
 }
+
+/* ===== BARRA ROJA CON LOGOS ===== */
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  background:#b71c1c;
+  color:white;
+
+  padding:8px 10px;
+  box-shadow:0 3px 6px rgba(0,0,0,0.25);
+}
+
+.logo-bar{
+  height:36px;
+  width:auto;
+}
+
+.bar-title{
+  text-align:center;
+  flex:1;
+  line-height:1.2;
+}
+
+.bar-title strong{
+  font-size:15px;
+  font-weight:700;
+}
+
+.bar-title span{
+  font-size:12px;
+  font-weight:500;
+  }
+
