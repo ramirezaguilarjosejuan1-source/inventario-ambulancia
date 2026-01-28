@@ -136,3 +136,37 @@ select, input{
   min-height:60px;
 }
 
+/* ================================
+   LOGOS BARRA SUPERIOR (FIX FINAL)
+   ================================ */
+
+.top-bar img,
+.header img{
+  width: 40px;
+  max-width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Evita que crezcan por reglas globales */
+img{
+  max-width: 100%;
+  height: auto;
+}
+.top-bar,
+.header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #c62828;
+  padding: 10px 12px;
+}
+@media (max-width: 480px){
+  .top-bar img,
+  .header img{
+    width: 34px;
+    height: 34px;
+  }
+}
+
