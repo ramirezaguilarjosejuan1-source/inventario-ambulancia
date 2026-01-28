@@ -185,17 +185,23 @@ body{
 
 
 /* ===== BANDA SUPERIOR ===== */
+
 .top-bar{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #c62828;
-  color: white;
-  padding: 10px 12px;
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  background: #b71c1c; /* rojo Cruz Roja */
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
 
 .top-bar h1{
   font-size: 16px;
