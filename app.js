@@ -118,7 +118,17 @@ function guardar(){
   salida.textContent="✅ Conteo guardado correctamente";
 }
 
+
+doc.setFontSize(12);
+doc.text(`Unidad: ${unidad}`, 10, 20);
+doc.text(`Guardia: ${guardia}`, 10, 28);
+doc.text(`Fecha: ${fecha}`, 10, 36);
+
 function pdfComparativo(){
+  const unidad = document.getElementById("Unidad").value;
+const guardia = document.getElementById("Guardia").value;
+const fecha = new Date().toLocaleDateString();
+  
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   const r = JSON.parse(localStorage.getItem("ultimo"));
