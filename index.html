@@ -1,71 +1,62 @@
-<h1>🚑 Inventario Ambulancia 🚑</h1>
-<p style="color:#c62828;font-weight:bold">
-  ⛑️ Cruz Roja Mexicana ⛑️
-</p>
-
-<p style="color:#c62828;font-weight:bold">
-  Nocturno A 
-</p>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inventario Ambulancia 🚑</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  
-  <div class=".header">
-  <img src="logo.png" class="logo">
+<!-- ===== BARRA SUPERIOR FIJA ===== -->
+<div class="header">
+  <img src="logo.png" alt="Cruz Roja" class="logo">
+
   <div class="titulo">
     <h1>Inventario Ambulancia</h1>
-    <span> Delegación Aguascalientes </span>
+    <span>Cruz Roja Mexicana · Nocturno A</span>
   </div>
-  <img src="ambulancia.png" class="ambulancia">
+
+  <img src="ambulancia.png" alt="Ambulancia" class="ambulancia">
 </div>
 
+<!-- ===== CONTENIDO ===== -->
+<div class="container">
 
-<div class="card">
+  <div class="card">
+    <select id="Unidad">
+      <option>AGS-011</option>
+      <option>AGS-014</option>
+      <option>AGS-018</option>
+      <option>AGS-019</option>
+      <option>AGS-021</option>
+      <option>AGS-022</option>
+      <option>AGS-023</option>
+      <option>AGS-027</option>
+      <option>AGS-028</option>
+      <option>AGS-030</option>
+    </select>
 
-  <select id="Unidad">
-    <option>Ags-011</option>
-    <option>Ags-014</option>
-    <option>Ags-018</option>
-    <option>Ags-019</option>
-    <option>Ags-021</option>
-    <option>Ags-022</option>
-    <option>Ags-023</option>
-    <option>Ags-027</option>
-    <option>Ags-028</option>
-    <option>Ags-030</option>    
-  </select>
+    <select id="Guardia">
+      <option>Matutino</option>
+      <option>Vespertino</option>
+      <option>Nocturno A</option>
+      <option>Nocturno B</option>
+      <option>Jornada</option>
+    </select>
+  </div>
 
+  <div id="formulario"></div>
+
+  <div class="acciones">
+    <button onclick="guardar()">💾 Guardar conteo</button>
+    <button onclick="pdfComparativo()">📝 Generar PDF</button>
+  </div>
+
+  <pre id="salida"></pre>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd
   
-  <select id="Guardia">
-    <option>Matutino</option>
-    <option>Vespertino</option>
-    <option>Nocturno A</option>
-    <option>Nocturno B</option>
-    <option>Jornada</option>
-  </select>
-</div>
-
-<div id="formulario"></div>
-
-<div class="acciones"><button onclick="guardar()">💾 Guardar conteo 💾</button>
-<button onclick="pdfComparativo()">📝 Generar PDF 📝</button>
-
-</div>
-
-<pre id="salida"></pre>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
-
