@@ -1,100 +1,241 @@
-/* ===== GENERAL ===== */
+/* === GENERAL === */
 body{
-  margin:0;
-  font-family:'Segoe UI', sans-serif;
-  background:
-    linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
-    url("fondo.png");
-  background-size:cover;
-  background-attachment:fixed;
+  margin:0;
+  padding:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:
+    linear-gradient(rgba(255,255,255,0.92),rgba(255,255,255,0.92)),
+    url("fondo.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
-/* ===== BARRA SUPERIOR ===== */
+/* === CONTENEDOR PRINCIPAL === */
+.container{
+  max-width: 420px;
+  margin: auto;
+  padding: 12px;
+}
+
+/* === TARJETAS === */
+.section{
+  background:#ffffff;
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:12px;
+  box-shadow:0 3px 6px rgba(0,0,0,0.15);
+  border-left:6px solid #c62828;
+}
+
+/* === TITULOS === */
+h1{
+  text-align:center;
+  color:#c62828;
+  margin-bottom:6px;
+}
+
+h2{
+  margin:0 0 6px 0;
+  font-size:17px;
+  color:#b71c1c;
+}
+
+/* === TEXTO === */
+p{
+  margin:6px 0;
+  font-size:14px;
+  text-align:center;
+}
+
+/* === INPUTS === */
+input, select{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+  margin-bottom:6px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+/* === CHECKBOX === */
+label{
+  font-size:14px;
+}
+
+/* === BOTONES === */
+button{
+  width:100%;
+  background:#c62828;
+  color:white;
+  border:none;
+  padding:12px;
+  margin-top:8px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+button:active{
+  background:#b71c1c;
+}
+
+/* === FIRMA === */
+canvas{
+  width:100%;
+  height:150px;
+  border:2px dashed #c62828;
+  border-radius:12px;
+  background:#fff;
+}
+
+/* === HISTORIAL === */
+#historial .section{
+  border-left:6px solid #2e7d32;
+}
+
+/* === MÓVIL AJUSTES === */
+@media (max-width:480px){
+  h1{ font-size:22px; }
+  h2{ font-size:16px; }
+  button{ font-size:15px; }
+}
+
+
 .header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  background:#b71c1c;
-  padding:10px 12px;
-  border-bottom:6px solid #c62828;
-  box-shadow:0 4px 8px rgba(0,0,0,0.3);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#c62828;
+  padding:10px 12px;
+  border-radius:0 0 18px 18px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* Logos */
 .header img{
-  max-height:42px;
-  width:auto;
+  height:45px;
 }
 
-/* Título */
+.logo{
+  margin-left:5px;
+}
+
+.ambulancia{
+  margin-right:5px;
+}
+
 .titulo{
-  text-align:center;
-  color:white;
-  flex:1;
+  text-align:center;
+  color:white;
+  flex:1;
 }
 
 .titulo h1{
-  margin:0;
-  font-size:20px;
-  font-weight:900;
+  font-size:18px;
+  margin:0;
 }
 
 .titulo span{
-  font-size:13px;
-  font-weight:600;
+  font-size:13px;
+  font-weight:300;
 }
 
-/* ===== CONTENEDOR ===== */
+/* Ajuste móvil */
+@media (max-width:480px){
+  .header img{
+    height:38px;
+  }
+  .titulo h1{
+    font-size:16px;
+  }
+}
+
+
+body{
+  margin:0;
+  padding:0;
+  background:#f4f4f4;
+}
+
 .container{
-  max-width:420px;
-  margin:auto;
-  padding:12px;
+  padding:10px;
 }
 
-/* ===== TARJETAS ===== */
-.card{
-  background:white;
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:12px;
-  box-shadow:0 3px 6px rgba(0,0,0,0.15);
-  border-left:6px solid #c62828;
+input, select{
+  margin-bottom:6px;
 }
 
-/* ===== INPUTS ===== */
-select, input{
-  width:100%;
-  padding:10px;
-  margin-bottom:8px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  font-size:16px;
+label{
+  font-size:14px;
 }
 
-/* ===== BOTONES ===== */
-.acciones button{
-  width:100%;
-  background:#c62828;
-  color:white;
-  border:none;
-  padding:12px;
-  margin-top:8px;
-  border-radius:14px;
-  font-size:16px;
-  font-weight:800;
+
+
+body{
+  background:
+    linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)),
+    url("fondo.png");
+  background-size:cover;
+  background-attachment:fixed;
 }
 
-.acciones button:active{
-  background:#b71c1c;
+
+
+
+
+/* ===== BANDA SUPERIOR ===== */
+
+.top-bar{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: #b71c1c; /* rojo Cruz Roja */
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* ===== MÓVIL ===== */
-@media(max-width:480px){
-  .titulo h1{font-size:18px;}
-  .header img{max-height:36px;}
+
+.top-bar h1{
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.logo-left,
+.logo-right{
+  width: 40px;
+  height: auto;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.container{
+  max-width: 100%;
+  padding: 10px;
+  margin: 0;
+}
+
+/* ===== INPUTS MÁS GRANDES (MÓVIL) ===== */
+input, se
+lect{
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+/* ===== SECCIONES ===== */
+.section-title{
+  background: #f5f5f5;
+  padding: 8px;
+  border-left: 5px solid #c62828;
+  margin-top: 15px;
+  font-weight: bold;
 }
