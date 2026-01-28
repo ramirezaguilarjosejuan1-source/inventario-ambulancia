@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventario Ambulancia 🚑</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🚑 Inventario de Ambulancia</h1>
+
+<div class="card">
+  <input id="unidad" placeholder="Unidad (AGS-000)">
+  <select id="guardia">
+    <option>Matutino</option>
+    <option>Vespertino</option>
+    <option>Nocturno A</option>
+    <option>Nocturno B</option>
+    <option>Jornada</option>
+  </select>
+</div>
+
+<div id="formulario"></div>
+
+<div class="acciones"><button onclick="guardar()">💾 Guardar conteo</button>
+<button onclick="pdfComparativo()">📄 Generar PDF</button>
+
+</div>
+
+<pre id="salida"></pre>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
+
