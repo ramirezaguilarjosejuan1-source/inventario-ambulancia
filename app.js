@@ -187,11 +187,13 @@ function pdfComparativo(){
     if(d.actual < d.ideal){
       doc.setFillColor(255,205,210);
       doc.rect(10,y-6,190,8,"F");
-      doc.text(`📌 Faltan ${d.ideal - d.actual}`,160,y);
+      doc.text(`FALTAN ${d.ideal - d.actual}`,160,y);
+
     }else{
       doc.setFillColor(200,230,201);
       doc.rect(10,y-6,190,8,"F");
-      doc.text("🆗 OK",170,y);
+      doc.text("COMPLETO",165,y);
+      
     }
 
     doc.setTextColor(0,0,0);
