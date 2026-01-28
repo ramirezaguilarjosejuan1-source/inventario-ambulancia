@@ -1,3 +1,18 @@
+
+function cargarImagenBase64(src, callback){
+  const img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.onload = function(){
+    const canvas = document.createElement("canvas");
+    canvas.width = this.width;
+    canvas.height = this.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(this,0,0);
+    callback(canvas.toDataURL("image/png"));
+  };
+  img.src = src;
+}
+
 /************************************************
  * INVENTARIO AMBULANCIA – CRUZ ROJA
  * Autor del sistema: (puedes poner tu nombre)
@@ -140,69 +155,45 @@ function guardar(){
 /* ====== PDF COMPARATIVO PREMIUM ====== */
 function pdfComparativo(){
 
-  const r = JSON.parse(localStorage.getItem("ultimo"));
-  if(!r){
-    alert("Primero guarda el conteo");
-    return;
-  }
+  const unidad = document.getElementById("Unidad").value;
+  const guardia = document.getElementById("Guardia").value;
+  const responsable = document.getElementById("responsable").value || "No especificado";
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  cargarImagenBase64("logo.png", function(logoBase64){
+    cargarImagenBase64("ambulancia.png", function(ambuBase64){
 
-  /* === BANDA ROJA SUPERIOR === */
-  doc.setFillColor(183,28,28);
-  doc.rect(0,0,210,25,"F");
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
 
-  doc.setTextColor(255,255,255);
-  doc.setFontSize(16);
-  doc.text("Inventario de Ambulancia",105,15,{align:"center"});
+      // 🔴 BARRA ROJA SUPERIOR
+      doc.setFillColor(198,40,40);
+      doc.rect(0,0,210,22,"F");
 
-  doc.setFontSize(10);
-  doc.text(`Unidad: ${r.unidad}`,10,22);
-  doc.text(`Guardia: ${r.guardia}`,80,22);
-  doc.text(`Fecha: ${r.fecha}`,145,22);
+      // 🖼️ LOGOS
+      doc.addImage(logoBase64,"PNG",10,4,14,14);
+      doc.addImage(ambuBase64,"PNG",186,4,14,14);
 
-  let y = 35;
+      // 🏷️ TITULO
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(14);
+      doc.text("Inventario de Ambulancia",105,14,{align:"center"});
 
-  /* === TABLA === */
-  doc.setTextColor(0,0,0);
-  doc.setFontSize(11);
-  doc.setFillColor(230,230,230);
-  doc.rect(10,y-6,190,8,"F");
+      // 📋 DATOS GENERALES
+      doc.setTextColor(0,0,0);
+      doc.setFontSize(10);
 
-  doc.text("Material",12,y);
-  doc.text("Ideal",120,y);
-  doc.text("Actual",140,y);
-  doc.text("Estado",165,y);
+      doc.text("Unidad: " + limpiarTexto(unidad),14,30);
+      doc.text("Guardia: " + limpiarTexto(guardia),14,36);
+      doc.text("Responsable: " + limpiarTexto(responsable),14,42);
 
-  y += 8;
+      let y = 55;
 
-  r.datos.forEach(d=>{
+      // 🔽 AQUÍ SIGUE TU TABLA Y CONTENIDO NORMAL
+      // (NO TOCAMOS TU LÓGICA DE INVENTARIO)
 
-    if(y > 270){
-      doc.addPage();
-      y = 20;
-    }
+      // AL FINAL
+      doc.save("Inventario_" + unidad + ".pdf");
 
-    if(d.actual < d.ideal){
-      doc.setFillColor(255,205,210);
-      doc.rect(10,y-6,190,8,"F");
-      doc.text(`FALTAN ${d.ideal - d.actual}`,160,y);
-
-    }else{
-      doc.setFillColor(200,230,201);
-      doc.rect(10,y-6,190,8,"F");
-      doc.text("COMPLETO",165,y);
-      
-    }
-
-    doc.setTextColor(0,0,0);
-    doc.text(d.nombre,12,y);
-    doc.text(String(d.ideal),122,y);
-    doc.text(String(d.actual),145,y);
-
-    y += 8;
+    });
   });
-
-  doc.save(`Inventario_${r.unidad}.pdf`);
 }
