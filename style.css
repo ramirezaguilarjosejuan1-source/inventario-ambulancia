@@ -124,3 +124,15 @@ select, input{
   font-weight:500;
   }
 
+/* === CORRECCIÓN LOGOS BARRA SUPERIOR === */
+.top-bar img{
+  width:auto !important;
+  max-width:40px !important;
+  height:auto !important;
+  object-fit:contain;
+}
+
+.top-bar{
+  min-height:60px;
+}
+
