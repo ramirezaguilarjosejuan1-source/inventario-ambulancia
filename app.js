@@ -153,47 +153,64 @@ function guardar(){
 }
 
 /* ====== PDF COMPARATIVO PREMIUM ====== */
-function pdfComparativo(){
+function pdfComparativo() {
+  const r = JSON.parse(localStorage.getItem("ultimo"));
 
-  const unidad = document.getElementById("Unidad").value;
-  const guardia = document.getElementById("Guardia").value;
-  const responsable = document.getElementById("responsable").value || "No especificado";
+  if (!r) {
+    alert("⚠️ Primero guarda el conteo");
+    return;
+  }
 
-  cargarImagenBase64("logo.png", function(logoBase64){
-    cargarImagenBase64("ambulancia.png", function(ambuBase64){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
+  let y = 20;
 
-      // 🔴 BARRA ROJA SUPERIOR
-      doc.setFillColor(198,40,40);
-      doc.rect(0,0,210,22,"F");
+  doc.setFontSize(16);
+  doc.text("INVENTARIO DE AMBULANCIA", 105, y, { align: "center" });
+  y += 10;
 
-      // 🖼️ LOGOS
-      doc.addImage(logoBase64,"PNG",10,4,14,14);
-      doc.addImage(ambuBase64,"PNG",186,4,14,14);
+  doc.setFontSize(11);
+  doc.text(`Unidad: ${r.unidad}`, 14, y); y += 6;
+  doc.text(`Guardia: ${r.guardia}`, 14, y); y += 6;
+  doc.text(`Fecha: ${r.fecha}`, 14, y); y += 10;
 
-      // 🏷️ TITULO
-      doc.setTextColor(255,255,255);
-      doc.setFontSize(14);
-      doc.text("Inventario de Ambulancia",105,14,{align:"center"});
+  // Encabezados
+  doc.setFillColor(200, 0, 0);
+  doc.setTextColor(255, 255, 255);
+  doc.rect(14, y - 6, 182, 8, "F");
 
-      // 📋 DATOS GENERALES
-      doc.setTextColor(0,0,0);
-      doc.setFontSize(10);
+  doc.text("Material", 16, y);
+  doc.text("Ideal", 120, y);
+  doc.text("Actual", 145, y);
+  doc.text("Estado", 170, y);
 
-      doc.text("Unidad: " + limpiarTexto(unidad),14,30);
-      doc.text("Guardia: " + limpiarTexto(guardia),14,36);
-      doc.text("Responsable: " + limpiarTexto(responsable),14,42);
+  y += 8;
+  doc.setTextColor(0, 0, 0);
 
-      let y = 55;
+  r.datos.forEach(d => {
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
 
-      // 🔽 AQUÍ SIGUE TU TABLA Y CONTENIDO NORMAL
-      // (NO TOCAMOS TU LÓGICA DE INVENTARIO)
+    if (d.actual < d.ideal) {
+      doc.setFillColor(255, 205, 210);
+      doc.rect(14, y - 6, 182, 8, "F");
+      doc.text("FALTANTE", 170, y);
+    } else {
+      doc.setFillColor(200, 230, 201);
+      doc.rect(14, y - 6, 182, 8, "F");
+      doc.text("OK", 175, y);
+    }
 
-      // AL FINAL
-      doc.save("Inventario_" + unidad + ".pdf");
+    doc.setTextColor(0, 0, 0);
+    doc.text(d.nombre, 16, y);
+    doc.text(String(d.ideal), 125, y);
+    doc.text(String(d.actual), 150, y);
 
-    });
+    y += 8;
   });
+
+  doc.save(`Inventario_${r.unidad}.pdf`);
 }
