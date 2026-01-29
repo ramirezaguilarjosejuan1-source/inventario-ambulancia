@@ -124,7 +124,7 @@ secciones.forEach(sec=>{
 
 /* ====== GUARDAR CONTEO ====== */
 function guardar(){
-
+  const responsable = document.getElementById("Responsable").value;
   const unidad = document.getElementById("Unidad").value;
   const guardia = document.getElementById("Guardia").value;
 
@@ -141,13 +141,16 @@ function guardar(){
       idx++;
     });
   });
-
-  localStorage.setItem("ultimo", JSON.stringify({
-    unidad,
-    guardia,
-    fecha: new Date().toLocaleString(),
-    datos
-  }));
+  
+localStorage.setItem("ultimo", JSON.stringify({
+  unidad,
+  guardia,
+  responsable,
+  fecha: new Date().toLocaleString(),
+  datos
+}));
+  
+  
 
   salida.textContent = " Conteo guardado correctamente";
 }
