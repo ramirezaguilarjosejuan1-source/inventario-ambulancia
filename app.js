@@ -158,62 +158,78 @@ localStorage.setItem("ultimo", JSON.stringify({
 /* ====== PDF COMPARATIVO PREMIUM ====== */
 function pdfComparativo() {
   const r = JSON.parse(localStorage.getItem("ultimo"));
-
   if (!r) {
     alert("⚠️ Primero guarda el conteo");
     return;
   }
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  cargarImagenBase64("logo.png", function(logoBase64){
+    cargarImagenBase64("ambulancia.png", function(ambuBase64){
 
-  let y = 20;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
 
-  doc.setFontSize(16);
-  doc.text("INVENTARIO DE AMBULANCIA", 105, y, { align: "center" });
-  y += 10;
+      /* ====== HEADER ROJO ====== */
+      doc.setFillColor(200, 0, 0);
+      doc.rect(0, 0, 210, 25, "F");
 
-  doc.setFontSize(11);
-  doc.text(`Unidad: ${r.unidad}`, 14, y); y += 6;
-  doc.text(`Guardia: ${r.guardia}`, 14, y); y += 6;
-  doc.text(`Fecha: ${r.fecha}`, 14, y); y += 10;
+      doc.addImage(logoBase64, "PNG", 10, 5, 15, 15);
+      doc.addImage(ambuBase64, "PNG", 185, 5, 15, 15);
 
-  // Encabezados
-  doc.setFillColor(200, 0, 0);
-  doc.setTextColor(255, 255, 255);
-  doc.rect(14, y - 6, 182, 8, "F");
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(14);
+      doc.text("CRUZ ROJA MEXICANA", 105, 12, { align:"center" });
+      doc.setFontSize(11);
+      doc.text("Inventario de Ambulancia", 105, 18, { align:"center" });
 
-  doc.text("Material", 16, y);
-  doc.text("Ideal", 120, y);
-  doc.text("Actual", 145, y);
-  doc.text("Estado", 170, y);
+      /* ====== DATOS GENERALES ====== */
+      let y = 35;
+      doc.setTextColor(0,0,0);
+      doc.setFontSize(11);
 
-  y += 8;
-  doc.setTextColor(0, 0, 0);
+      doc.text(`Unidad: ${r.unidad}`, 14, y); y+=6;
+      doc.text(`Guardia: ${r.guardia}`, 14, y); y+=6;
+      doc.text(`Responsable: ${r.responsable || "No especificado"}`, 14, y); y+=6;
+      doc.text(`Fecha: ${r.fecha}`, 14, y); y+=10;
 
-  r.datos.forEach(d => {
-    if (y > 270) {
-      doc.addPage();
-      y = 20;
-    }
+      /* ====== TABLA ====== */
+      doc.setFillColor(200,0,0);
+      doc.setTextColor(255,255,255);
+      doc.rect(14, y-6, 182, 8, "F");
 
-    if (d.actual < d.ideal) {
-      doc.setFillColor(255, 205, 210);
-      doc.rect(14, y - 6, 182, 8, "F");
-      doc.text("FALTANTE", 170, y);
-    } else {
-      doc.setFillColor(200, 230, 201);
-      doc.rect(14, y - 6, 182, 8, "F");
-      doc.text("OK", 175, y);
-    }
+      doc.text("Material", 16, y);
+      doc.text("Ideal", 120, y);
+      doc.text("Actual", 145, y);
+      doc.text("Estado", 170, y);
 
-    doc.setTextColor(0, 0, 0);
-    doc.text(d.nombre, 16, y);
-    doc.text(String(d.ideal), 125, y);
-    doc.text(String(d.actual), 150, y);
+      y+=8;
+      doc.setTextColor(0,0,0);
 
-    y += 8;
+      r.datos.forEach(d=>{
+        if(y > 270){
+          doc.addPage();
+          y = 20;
+        }
+
+        if(d.actual < d.ideal){
+          doc.setFillColor(255, 205, 210);
+          doc.rect(14, y-6, 182, 8, "F");
+          doc.text("FALTANTE", 168, y);
+        } else {
+          doc.setFillColor(200, 230, 201);
+          doc.rect(14, y-6, 182, 8, "F");
+          doc.text("OK", 175, y);
+        }
+
+        doc.setTextColor(0,0,0);
+        doc.text(d.nombre, 16, y);
+        doc.text(String(d.ideal), 125, y);
+        doc.text(String(d.actual), 150, y);
+
+        y+=8;
+      });
+
+      doc.save(`Inventario_${r.unidad}.pdf`);
+    });
   });
-
-  doc.save(`Inventario_${r.unidad}.pdf`);
 }
