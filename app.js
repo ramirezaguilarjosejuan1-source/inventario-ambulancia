@@ -149,7 +149,7 @@ function guardar(){
     datos
   }));
 
-  salida.textContent = "✅ Conteo guardado correctamente";
+  salida.textContent = " Conteo guardado correctamente";
 }
 
 /* ====== PDF COMPARATIVO PREMIUM ====== */
