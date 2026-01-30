@@ -1,4 +1,12 @@
+/*************** USUARIOS DEL SISTEMA ***************/
+const usuarios = [
+  { user: "admin", pin: "1234", rol: "ADMIN" },
+  { user: "jefe", pin: "1111", rol: "JEFE" },
+  { user: "paramedico", pin: "2222", rol: "OPERATIVO" }
+];
 
+let usuarioActivo = null;
+/-----------------------------------------------------------/
 function cargarImagenBase64(src, callback){
   const img = new Image();
   img.crossOrigin = "Anonymous";
