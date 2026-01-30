@@ -1,3 +1,5 @@
+let tipoUnidadSeleccionada = null;
+
 /*************** USUARIOS DEL SISTEMA ***************/
 const usuarios = [
   { user: "admin", pin: "1234", rol: "ADMIN" },
