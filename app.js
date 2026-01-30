@@ -1,5 +1,3 @@
-let tipoUnidadSeleccionada = null;
-
 /*************** USUARIOS DEL SISTEMA ***************/
 const usuarios = [
   { user: "admin", pin: "1234", rol: "ADMIN" },
@@ -8,26 +6,6 @@ const usuarios = [
 ];
 
 let usuarioActivo = null;
-function login(){
-  const u = document.getElementById("usuario").value;
-  const p = document.getElementById("pin").value;
-
-  const encontrado = usuarios.find(x => x.user === u && x.pin === p);
-
-  if(!encontrado){
-    alert("❌ Usuario o PIN incorrecto");
-    return;
-  }
-
-  usuarioActivo = encontrado;
-
-  document.getElementById("login").style.display = "none";
-  document.getElementById("hub").style.display = "block";
-
-  document.getElementById("bienvenida").innerText =
-    `👋 Bienvenido ${usuarioActivo.user} | Rol: ${usuarioActivo.rol}`;
-}
-
 /-----------------------------------------------------------/
 function cargarImagenBase64(src, callback){
   const img = new Image();
@@ -263,12 +241,10 @@ function guardar(){
 localStorage.setItem("ultimo", JSON.stringify({
   unidad,
   guardia,
-  usuario: usuarioActivo.user,
-  rol: usuarioActivo.rol,
+  responsable,
   fecha: new Date().toLocaleString(),
   datos
 }));
-
   
   
 
@@ -352,20 +328,4 @@ function pdfComparativo() {
       doc.save(`Inventario_${r.unidad}.pdf`);
     });
   });
-}
-/************* CONTROL DE VISTAS *************/
-function abrirInventario(){
-  document.getElementById("hub").style.display = "none";
-  document.getElementById("inventario").style.display = "block";
-}
-
-function volverHub(){
-  document.getElementById("inventario").style.display = "none";
-  document.getElementById("hub").style.display = "block";
-}
-
-function logout(){
-  usuarioActivo = null;
-  document.getElementById("hub").style.display = "none";
-  document.getElementById("login").style.display = "block";
-}
+     }
