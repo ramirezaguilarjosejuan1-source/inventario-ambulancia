@@ -261,10 +261,12 @@ function guardar(){
 localStorage.setItem("ultimo", JSON.stringify({
   unidad,
   guardia,
-  responsable,
+  usuario: usuarioActivo.user,
+  rol: usuarioActivo.rol,
   fecha: new Date().toLocaleString(),
   datos
 }));
+
   
   
 
