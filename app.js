@@ -349,3 +349,19 @@ function pdfComparativo() {
     });
   });
 }
+/************* CONTROL DE VISTAS *************/
+function abrirInventario(){
+  document.getElementById("hub").style.display = "none";
+  document.getElementById("inventario").style.display = "block";
+}
+
+function volverHub(){
+  document.getElementById("inventario").style.display = "none";
+  document.getElementById("hub").style.display = "block";
+}
+
+function logout(){
+  usuarioActivo = null;
+  document.getElementById("hub").style.display = "none";
+  document.getElementById("login").style.display = "block";
+}
