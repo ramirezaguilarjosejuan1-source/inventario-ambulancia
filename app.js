@@ -15,81 +15,169 @@ function cargarImagenBase64(src, callback){
 
 /************************************************
  * INVENTARIO AMBULANCIA – CRUZ ROJA
- * Autor del sistema: (puedes poner tu nombre)
+ * Autor del sistema: Jose Juan Ramirez Aguilar
  ************************************************/
 
 /* ====== SECCIONES E INSUMOS ====== */
 const secciones = [
-  {
-    titulo:"🩹 TRAUMA",
-    items:[
-      ["Extintor",1,"bool"],
-      ["Gel antibacterial",1,"bool"],
-      ["Desinfectante de equipos",1,"bool"],
-      ["Sábanas",10,"num"],
-      ["Torniquete CAT o táctico",1,"num"],
-      ["Carro camilla",1,"num"],
-      ["Camilla marina",1,"num"],
-      ["FEL",1,"num"],
-      ["Tabla de RCP",1,"num"],
-      ["Chaleco de extracción",1,"num"],
-      ["Collarín cervical adulto",1,"num"],
-      ["Collarín cervical pediátrico",1,"num"],
-      ["Inmovilizador de cráneo",1,"bool"],
-      ["Araña",1,"bool"],
-      ["Férula EI bota",1,"num"],
-      ["Férula EI larga",1,"num"],
-      ["Férula ES larga",1,"num"],
-      ["Férula ES corta",1,"num"],
-      ["Paquete de gasas estériles",10,"num"],
-      ["Paquete de apósitos",5,"num"],
-      ["Venda 5cm",6,"num"],
-      ["Venda 10cm",6,"num"],
-      ["Venda 15cm",6,"num"],
-      ["Venda 30cm",2,"num"],
-      ["Kit gineco",1,"num"],
-      ["Sábana térmica",1,"num"],
-      ["Sábana para quemados",1,"num"],
-      ["Cobertor",1,"num"]
-    ]
-  },
-  {
-    titulo:"❤️ SIGNOS VITALES",
-    items:[
-      ["Baumanómetro adulto",1,"num"],
-      ["Baumanómetro pediátrico",1,"num"],
-      ["Estetoscopio",1,"num"],
-      ["Glucómetro",1,"num"],
-      ["Tiras reactivas",10,"num"],
-      ["Torundas",1,"num"],
-      ["Termómetro",1,"num"],
-      ["Oxímetro",1,"num"]
-    ]
-  },
-  {
-    titulo:"🫁 VÍA AÉREA",
-    items:[
-      ["Puntas nasales",5,"num"],
-      ["Mascarilla reservorio",5,"num"],
-      ["Mascarilla simple",5,"num"],
-      ["BVM neonatal",1,"num"],
-      ["BVM pediátrico",1,"num"],
-      ["BVM adulto",1,"num"],
-      ["Aspirador funcional",1,"bool"],
-      ["Juego de mascarillas laríngeas",1,"bool"],
-      ["Salbutamol / Ipatropio",1,"bool"]
-    ]
-  },
-  {
-    titulo:"💊 MEDICAMENTOS",
-    items:[
-      ["Ácido acetilsalicílico 500mg",1,"bool"],
-      ["Electrolitos orales",5,"num"],
-      ["Atropina",3,"num"],
-      ["Epinefrina",3,"num"],
-      ["Isosorbida / Trinitrato",1,"bool"]
-    ]
-  }
+{
+  titulo:"🔥 SEGURIDAD Y BIOSEGURIDAD",
+  items:[
+    ["Extintor",1,"bool"],
+    ["Gel antibacterial",1,"bool"],
+    ["Desinfectante equipos y superficies",1,"bool"],
+    ["Guantes de látex",10,"num"],
+    ["Cubrebocas",10,"num"],
+    ["Mascarilla N95",2,"num"],
+    ["Bote RPBI",1,"num"],
+    ["Bote basura común",1,"num"]
+  ]
+},
+{
+  titulo:"🛏️ TRASLADO Y CONFORT DEL PACIENTE",
+  items:[
+    ["Sábanas",10,"num"],
+    ["Cobertor",1,"num"],
+    ["Sábana térmica",1,"num"],
+    ["Sábana para quemados",1,"num"],
+    ["Camilla marina",1,"num"],
+    ["Carro camilla",1,"num"]
+  ]
+},
+{
+  titulo:"🩺 SIGNOS VITALES",
+  items:[
+    ["Baumanómetro adulto",1,"num"],
+    ["Baumanómetro pediátrico",1,"num"],
+    ["Estetoscopio",1,"num"],
+    ["Glucómetro",1,"num"],
+    ["Tiras reactivas",10,"num"],
+    ["Torundas",1,"num"],
+    ["Termómetro",1,"num"],
+    ["Oxímetro",1,"num"]
+  ]
+},
+{
+  titulo:"🚑 TRAUMA, INMOVILIZACIÓN Y EXTRICACIÓN",
+  items:[
+    ["Torniquete CAT / Táctico",1,"num"],
+    ["Tabla de RCP",1,"num"],
+    ["Chaleco de extracción",1,"num"],
+    ["FEL",1,"num"],
+    ["Collarín cervical adulto",1,"num"],
+    ["Collarín cervical pediátrico",1,"num"],
+    ["Inmovilizador de cráneo",1,"bool"],
+    ["Araña para camilla",1,"bool"],
+    ["Férula EI tipo bota",1,"num"],
+    ["Férula EI larga",1,"num"],
+    ["Férula ES larga",1,"num"],
+    ["Férula ES corta",1,"num"]
+  ]
+},
+{
+  titulo:"🩹 CURACIÓN Y HERIDAS",
+  items:[
+    ["Gasas estériles (paquetes)",10,"num"],
+    ["Apósitos",5,"num"],
+    ["Iodopovidona espuma",1,"num"],
+    ["Jabón quirúrgico",1,"num"],
+    ["Venda 5 cm",6,"num"],
+    ["Venda 10 cm",6,"num"],
+    ["Venda 15 cm",6,"num"],
+    ["Venda 30 cm",2,"num"],
+    ["Tela adhesiva",2,"num"]
+  ]
+},
+{
+  titulo:"🚺 GINECO - OBSTÉTRICO",
+  items:[
+    ["Kit ginecológico",1,"num"]
+  ]
+},
+{
+  titulo:"🏷️ TRIAGE Y DESASTRES",
+  items:[
+    ["Targets de triage",10,"num"]
+  ]
+},
+{
+  titulo:"🫁 VÍA AÉREA Y OXIGENOTERAPIA",
+  items:[
+    ["Cánula nasofaríngea 3.5",1,"num"],
+    ["Cánula nasofaríngea 4.0",1,"num"],
+    ["Cánula nasofaríngea 4.5",1,"num"],
+    ["Cánula nasofaríngea 5.5",1,"num"],
+    ["Cánula nasofaríngea 6.5",1,"num"],
+    ["Cánula nasofaríngea 7.0",1,"num"],
+    ["Cánula nasofaríngea 7.5",1,"num"],
+    ["Cánula nasofaríngea 8.0",1,"num"],
+    ["Cánula nasofaríngea 9.0",1,"num"],
+
+    ["Cánula orofaríngea 00",1,"num"],
+    ["Cánula orofaríngea 0",1,"num"],
+    ["Cánula orofaríngea 1",1,"num"],
+    ["Cánula orofaríngea 2",1,"num"],
+    ["Cánula orofaríngea 3",1,"num"],
+    ["Cánula orofaríngea 4",1,"num"],
+    ["Cánula orofaríngea 5",1,"num"],
+    ["Cánula orofaríngea 6",1,"num"],
+
+    ["Puntas nasales",5,"num"],
+    ["Mascarilla con reservorio",5,"num"],
+    ["Mascarilla simple",5,"num"],
+    ["BVM neonatal",1,"num"],
+    ["BVM pediátrico",1,"num"],
+    ["BVM adulto",1,"num"],
+    ["Aspirador funcional",1,"bool"],
+    ["Mascarillas laríngeas",1,"bool"]
+  ]
+},
+{
+  titulo:"💉 TERAPIA INTRAVENOSA",
+  items:[
+    ["Normogotero",5,"num"],
+    ["Agujas hipodérmicas",3,"num"],
+
+    ["Catéter venoso #14",5,"num"],
+    ["Catéter venoso #16",5,"num"],
+    ["Catéter venoso #18",5,"num"],
+    ["Catéter venoso #19",5,"num"],
+    ["Catéter venoso #20",5,"num"],
+    ["Catéter venoso #21",5,"num"],
+    ["Catéter venoso #22",5,"num"],
+    ["Catéter venoso #24",5,"num"],
+
+    ["Jeringa insulina",5,"num"],
+    ["Jeringa 3 ml",5,"num"],
+    ["Jeringa 5 ml",5,"num"],
+    ["Jeringa 10 ml",5,"num"],
+    ["Jeringa 20 ml",5,"num"]
+  ]
+},
+{
+  titulo:"💧 SOLUCIONES INTRAVENOSAS",
+  items:[
+    ["Hartmann 500 ml",3,"num"],
+    ["Cloruro de sodio 500 ml",3,"num"],
+    ["Glucosa 5% 500 ml",3,"num"],
+
+    ["Hartmann 250 ml",5,"num"],
+    ["Cloruro de sodio 250 ml",5,"num"],
+    ["Glucosa 5% 250 ml",5,"num"],
+    ["Glucosa 50% 50 ml",5,"num"]
+  ]
+},
+{
+  titulo:"💊 MEDICAMENTOS",
+  items:[
+    ["Electrolitos orales",5,"num"],
+    ["Atropina",3,"num"],
+    ["Epinefrina",3,"num"],
+    ["Isosorbida / Trinitrato",1,"bool"],
+    ["Salbutamol / Ipatropio",1,"bool"],
+    ["Ácido acetilsalicílico 500mg",1,"bool"]
+  ]
+}
 ];
 
 /* ====== CREAR FORMULARIO ====== */
