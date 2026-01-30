@@ -6,6 +6,26 @@ const usuarios = [
 ];
 
 let usuarioActivo = null;
+function login(){
+  const u = document.getElementById("usuario").value;
+  const p = document.getElementById("pin").value;
+
+  const encontrado = usuarios.find(x => x.user === u && x.pin === p);
+
+  if(!encontrado){
+    alert("❌ Usuario o PIN incorrecto");
+    return;
+  }
+
+  usuarioActivo = encontrado;
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("hub").style.display = "block";
+
+  document.getElementById("bienvenida").innerText =
+    `👋 Bienvenido ${usuarioActivo.user} | Rol: ${usuarioActivo.rol}`;
+}
+
 /-----------------------------------------------------------/
 function cargarImagenBase64(src, callback){
   const img = new Image();
