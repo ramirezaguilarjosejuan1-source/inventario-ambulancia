@@ -8,18 +8,36 @@
 </head>
 
 <body>
-  <!-- LOGIN -->
-<div id="login" class="card">
-  <h2>🔐 Acceso al sistema</h2>
-  <input id="usuario" placeholder="Usuario">
-  <input id="pin" type="password" placeholder="PIN">
-  <button onclick="login()">Ingresar 🚑</button>
+
+<!-- LOGIN -->
+  <div id="login" class="card">
+    <h2>🔐 Acceso al sistema</h2>
+    <input id="usuario" placeholder="Usuario">
+    <input id="pin" type="password" placeholder="PIN">
+    <button onclick="login()">Ingresar 🚑</button>
 </div>
-<button onclick="volverHub()">⬅ Volver al HUB</button>
+
+  <button onclick="volverHub()">⬅ Volver al HUB</button>
+
 <!-- HUB -->
 <div id="hub" style="display:none">
   <div class="card">
-    <h2 id="bienvenida"></h2>
+  <h2 id="bienvenida"></h2>
+ 
+  <!-- TIPO DE UNIDAD -->
+<div id="tipoUnidad" style="display:none">
+  <div class="card">
+    <h2>🚑 Selecciona tipo de unidad</h2>
+  </div>
+
+  <div class="hub-grid">
+    <button onclick="seleccionarTipo('BASICA')">🚑 Básica</button>
+    <button onclick="seleccionarTipo('AVANZADA')">🚑 Avanzada</button>
+    <button onclick="seleccionarTipo('RESCATE')">🚒 Rescate</button>
+    <button onclick="volverHub()">⬅ Volver</button>
+  </div>
+</div>
+
   </div>
 
   <div class="hub-grid">
