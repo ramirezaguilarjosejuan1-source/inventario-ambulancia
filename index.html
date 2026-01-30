@@ -2,34 +2,41 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Sistema de Inventario Ambulancia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventario Ambulancia</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<!-- LOGIN -->
-  <div id="login" class="card">
-    <h2>🔐 Acceso al sistema</h2>
-    <input id="usuario" placeholder="Usuario">
-    <input id="pin" type="password" placeholder="PIN">
-    <button onclick="login()">Ingresar 🚑</button>
+<!-- ================= LOGIN ================= -->
+<div id="login" class="card">
+  <h2>🔐 Acceso al sistema</h2>
+  <input id="usuario" placeholder="Usuario">
+  <input id="pin" type="password" placeholder="PIN">
+  <button onclick="login()">Ingresar 🚑</button>
 </div>
 
-  <button onclick="volverHub()">⬅ Volver al HUB</button>
-
-<!-- HUB -->
+<!-- ================= HUB ================= -->
 <div id="hub" style="display:none">
   <div class="card">
-  <h2 id="bienvenida"></h2>
- 
-  <!-- TIPO DE UNIDAD -->
+    <h2 id="bienvenida"></h2>
+  </div>
+
+  <div class="hub-grid">
+    <button onclick="abrirTipoUnidad()">🚑 Unidades</button>
+    <button onclick="verHistorial()">📊 Historial</button>
+    <button onclick="alert('Módulo de usuarios próximamente')">👤 Usuarios</button>
+    <button onclick="logout()">🚪 Salir</button>
+  </div>
+</div>
+
+<!-- ================= TIPO DE UNIDAD ================= -->
 <div id="tipoUnidad" style="display:none">
   <div class="card">
     <h2>🚑 Selecciona tipo de unidad</h2>
-
-
   </div>
 
   <div class="hub-grid">
@@ -40,85 +47,22 @@
   </div>
 </div>
 
-  </div>
-
-  <div class="hub-grid">
-    <button onclick="abrirTipoUnidad()">🚑 Unidades</button>
-    <button onclick="verHistorial()">📊 Historial</button>
-    <button onclick="alert('Próximamente')">👤 Usuarios</button>
-    <button onclick="logout()">🚪 Salir</button>
-  </div>
-</div>
-
-  <div id="inventario" style="display:none">
-<!----------------------- Barra superior ------------------------------------->
-    <button onclick="volverHub()">⬅ Volver al HUB</button>
-<div class="top-bar">
-  <img src="logo.png" class="logo-bar" alt="Cruz Roja">
-
-  <div class="bar-title">
-    <strong>Inventario Ambulancia</strong><br>
-    <span>Cruz Roja Mexicana</span>
-  </div>
-
-  <img src="ambulancia.png" class="logo-bar" alt="Ambulancia">
-</div>
-
-  
-<h1>🚑 Inventario Ambulancia 🚑</h1>
-
-<p class="subtitulo">
-  ⛑️ Cruz Roja Mexicana ⛑️
-</p>
-
-<p class="turno">
-  Nocturno A
-</p>
-
-<div class="card">
-
-  <select id="Unidad">
-    <option>AGS-011</option>
-    <option>AGS-014</option>
-    <option>AGS-018</option>
-    <option>AGS-019</option>
-    <option>AGS-021</option>
-    <option>AGS-022</option>
-    <option>AGS-023</option>
-    <option>AGS-027</option>
-    <option>AGS-028</option>
-    <option>AGS-030</option>
-  </select>
-
-  <select id="Guardia">
-    <option>Matutino</option>
-    <option>Vespertino</option>
-    <option>Nocturno A</option>
-    <option>Nocturno B</option>
-    <option>Jornada</option>
-  </select>
-  
-</div>
-
-<div id="formulario"></div>
-<div class="acciones">
-  
+<!-- ================= INVENTARIO ================= -->
+<div id="inventario" style="display:none">
   <div class="card">
-    
-    <input id="Responsable" type="text" placeholder="Nombre del jefe de servicio">
-  </div>
-  
-  <button onclick="guardar()">💾 Guardar conteo</button>
-  <button onclick="pdfComparativo()">📝 Generar PDF 📝</button>
+    <h2 id="tituloInventario"></h2>
 
+    <!-- AQUÍ VA TU CHECKLIST / TABLA -->
+    <div id="listaInventario"></div>
+
+    <button onclick="generarPDF()">📄 Generar PDF</button>
+    <button onclick="volverHub()">⬅ Volver al HUB</button>
+  </div>
 </div>
 
-<pre id="salida"></pre>
-
+<!-- ================= SCRIPTS ================= -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <script src="app.js"></script>
 
 </body>
 </html>
-</div>
