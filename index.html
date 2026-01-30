@@ -8,6 +8,28 @@
 </head>
 
 <body>
+  <!-- LOGIN -->
+<div id="login" class="card">
+  <h2>🔐 Acceso al sistema</h2>
+  <input id="usuario" placeholder="Usuario">
+  <input id="pin" type="password" placeholder="PIN">
+  <button onclick="login()">Ingresar 🚑</button>
+</div>
+
+<!-- HUB -->
+<div id="hub" style="display:none">
+  <div class="card">
+    <h2 id="bienvenida"></h2>
+  </div>
+
+  <div class="hub-grid">
+    <button onclick="abrirInventario()">🚑 Unidades</button>
+    <button onclick="verHistorial()">📊 Historial</button>
+    <button onclick="alert('Próximamente')">👤 Usuarios</button>
+    <button onclick="logout()">🚪 Salir</button>
+  </div>
+</div>
+<!----------------------- Barra superior ------------------------------------->
 <div class="top-bar">
   <img src="logo.png" class="logo-bar" alt="Cruz Roja">
 
