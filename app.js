@@ -258,7 +258,7 @@ function guardar(){
 
   secciones.forEach(sec=>{
     sec.items.forEach(i=>{
-      
+
 const actual = Number(document.getElementById("i"+idx).value || 0);
 const ideal = i[1];
 
@@ -268,6 +268,7 @@ datos.push({
   actual,
   faltante: Math.max(ideal - actual, 0)
 });
+
 
       idx++;
     });
@@ -336,11 +337,53 @@ function pdfComparativo() {
       y+=8;
       doc.setTextColor(0,0,0);
 
-      r.datos.forEach(d=>{
-        if(y > 270){
-          doc.addPage();
-          y = 20;
-        }
+let index = 0;
+
+secciones.forEach(sec => {
+
+  // Encabezado de sección
+  if(y > 260){
+    doc.addPage();
+    y = 20;
+  }
+
+  doc.setFont(undefined, "bold");
+  doc.setTextColor(200,0,0);
+  doc.text(sec.titulo, 14, y);
+  doc.setFont(undefined, "normal");
+  doc.setTextColor(0,0,0);
+  y += 6;
+
+  sec.items.forEach(() => {
+    const d = r.datos[index];
+
+    if(y > 270){
+      doc.addPage();
+      y = 20;
+    }
+
+    if(d.faltante > 0){
+      doc.setFillColor(255, 205, 210);
+      doc.rect(14, y-6, 182, 8, "F");
+      doc.text(`FALTAN ${d.faltante}`, 165, y);
+    } else {
+      doc.setFillColor(200, 230, 201);
+      doc.rect(14, y-6, 182, 8, "F");
+      doc.text("OK", 175, y);
+    }
+
+    doc.setTextColor(0,0,0);
+    doc.text(d.nombre, 16, y);
+    doc.text(String(d.ideal), 125, y);
+    doc.text(String(d.actual), 150, y);
+
+    y += 8;
+    index++;
+  });
+
+  y += 4;
+});
+
 
         if(d.actual < d.ideal){
           doc.setFillColor(255, 205, 210);
