@@ -37,42 +37,39 @@ const secciones = [
 {
   titulo:"🛏️ TRASLADO Y CONFORT DEL PACIENTE",
   items:[
-    ["Sábanas",10,"num"],
-    ["Cobertor",1,"num"],
-    ["Sábana térmica",1,"num"],
-    ["Sábana para quemados",1,"num"],
-    ["Camilla marina",1,"num"],
-    ["Carro camilla",1,"num"]
+    ["Sábanas",1,"bool"],
+    ["Cobertor",1,"bool"],
+    ["Sábana térmica",1,"bool"],
+    ["Camilla marina",1,"bool"],
+    ["Carro camilla",1,"bool"]
   ]
 },
 {
   titulo:"🩺 SIGNOS VITALES",
   items:[
-    ["Baumanómetro adulto",1,"num"],
-    ["Baumanómetro pediátrico",1,"num"],
-    ["Estetoscopio",1,"num"],
-    ["Glucómetro",1,"num"],
+    ["Baumanómetro adulto",1,"bool"],
+    ["Baumanómetro pediátrico",1,"bool"],
+    ["Estetoscopio",1,"bool"],
+    ["Glucómetro",1,"bool"],
     ["Tiras reactivas",10,"num"],
-    ["Torundas",1,"num"],
-    ["Termómetro",1,"num"],
-    ["Oxímetro",1,"num"]
+    ["Torundas",1,"bool"],
+    ["Termómetro",1,"bool"],
+    ["Oxímetro",1,"bool"]
   ]
 },
 {
   titulo:"🚑 TRAUMA, INMOVILIZACIÓN Y EXTRICACIÓN",
   items:[
-    ["Torniquete CAT / Táctico",1,"num"],
-    ["Tabla de RCP",1,"num"],
-    ["Chaleco de extracción",1,"num"],
-    ["FEL",1,"num"],
-    ["Collarín cervical adulto",1,"num"],
-    ["Collarín cervical pediátrico",1,"num"],
+    ["Sábana para quemados",1,"bool"],
+    ["Torniquete CAT / Táctico",1,"bool"],
+    ["Tabla de RCP",1,"bool"],
+    ["Chaleco de extracción",1,"bool"],
+    ["FEL",1,"bool"],
+    ["Collarín cervical adulto",1,"bool"],
+    ["Collarín cervical pediátrico",1,"bool"],
     ["Inmovilizador de cráneo",1,"bool"],
     ["Araña para camilla",1,"bool"],
-    ["Férula EI tipo bota",1,"num"],
-    ["Férula EI larga",1,"num"],
-    ["Férula ES larga",1,"num"],
-    ["Férula ES corta",1,"num"]
+    ["Juego de férulas",1,"bool"],
   ]
 },
 {
