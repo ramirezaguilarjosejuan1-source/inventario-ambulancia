@@ -183,7 +183,7 @@ const secciones = [
     ["Hartmann 250 ml",2,"num"],
     ["Cloruro de sodio 250 ml",2,"num"],
     ["Glucosa 5% 250 ml",2,"num"],
-    ["Glucosa 50% 50 ml",2,"num"]
+    ["Glucosa 50% 50 ml",2,"num"],
     ["Iodopovidona espuma",1,"bool"],
     ["Jabón quirúrgico",1,"bool"],
     ["Gasas estériles (paquetes)",5,"num"],
