@@ -75,7 +75,7 @@ const secciones = [
 {
   titulo:"🩹 CURACIÓN Y HERIDAS GAVETA",
   items:[
-    ["Iodopovidona espuma",1,"bool"],
+    ["Iodopovidona/Benzal",1,"bool"],
     ["Jabón quirúrgico",1,"bool"],
     ["Gasas estériles (paquetes)",10,"num"],
     ["Apósitos",10,"num"],
@@ -184,7 +184,7 @@ const secciones = [
     ["Cloruro de sodio 250 ml",2,"num"],
     ["Glucosa 5% 250 ml",2,"num"],
     ["Glucosa 50% 50 ml",2,"num"],
-    ["Iodopovidona espuma",1,"bool"],
+    ["Iodopovidona/Benzal",1,"bool"],
     ["Jabón quirúrgico",1,"bool"],
     ["Gasas estériles (paquetes)",5,"num"],
     ["Apósitos",5,"num"],
