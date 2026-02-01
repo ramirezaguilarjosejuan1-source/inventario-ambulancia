@@ -179,15 +179,38 @@ const secciones = [
 {
   titulo:"🩹 EQUIPO DE BOTIQUÍN",
   items:[
-    ["Gasas estériles",20,"num"],
-    ["Vendas elásticas",5,"num"],
-    ["Vendas triangulares",2,"num"],
-    ["Tela adhesiva",2,"num"],
-    ["Curitas",20,"num"],
-    ["Tijeras",1,"bool"],
-    ["Pinzas",1,"bool"],
-    ["Solución salina",2,"num"],
-    ["Antiséptico",1,"bool"]
+    
+    ["Hartmann 250 ml",2,"num"],
+    ["Cloruro de sodio 250 ml",2,"num"],
+    ["Glucosa 5% 250 ml",2,"num"],
+    ["Glucosa 50% 50 ml",2,"num"]
+    ["Iodopovidona espuma",1,"bool"],
+    ["Jabón quirúrgico",1,"bool"],
+    ["Gasas estériles (paquetes)",5,"num"],
+    ["Apósitos",5,"num"],
+    ["Venda 5 cm",2,"num"],
+    ["Venda 10 cm",2,"num"],
+    ["Venda 15 cm",2,"num"],
+    ["Venda 30 cm",2,"num"],
+    ["Tela adhesiva",1,"num"],
+    ["Puntas nasales",2,"num"],
+    ["Mascarilla con reservorio",2,"num"],
+    ["Mascarilla simple",2,"num"],
+    ["Normogotero",2,"num"],
+    ["Agujas hipodérmicas",2,"num"],
+    ["Catéter venoso #14",2,"num"],
+    ["Catéter venoso #16",2,"num"],
+    ["Catéter venoso #18",2,"num"],
+    ["Catéter venoso #19",2,"num"],
+    ["Catéter venoso #20",2,"num"],
+    ["Catéter venoso #21",2,"num"],
+    ["Catéter venoso #22",2,"num"],
+    ["Catéter venoso #24",2,"num"],
+    ["Jeringa insulina",2,"num"],
+    ["Jeringa 3 ml",2,"num"],
+    ["Jeringa 5 ml",2,"num"],
+    ["Jeringa 10 ml",2,"num"],
+    ["Jeringa 20 ml",2,"num"]
   ]
 }
 
