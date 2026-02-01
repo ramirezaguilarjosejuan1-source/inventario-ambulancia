@@ -73,23 +73,23 @@ const secciones = [
   ]
 },
 {
-  titulo:"🩹 CURACIÓN Y HERIDAS",
+  titulo:"🩹 CURACIÓN Y HERIDAS GAVETA",
   items:[
+    ["Iodopovidona espuma",1,"bool"],
+    ["Jabón quirúrgico",1,"bool"],
     ["Gasas estériles (paquetes)",10,"num"],
-    ["Apósitos",5,"num"],
-    ["Iodopovidona espuma",1,"num"],
-    ["Jabón quirúrgico",1,"num"],
-    ["Venda 5 cm",6,"num"],
-    ["Venda 10 cm",6,"num"],
-    ["Venda 15 cm",6,"num"],
-    ["Venda 30 cm",2,"num"],
-    ["Tela adhesiva",2,"num"]
+    ["Apósitos",10,"num"],
+    ["Venda 5 cm",3,"num"],
+    ["Venda 10 cm",3,"num"],
+    ["Venda 15 cm",3,"num"],
+    ["Venda 30 cm",3,"num"],
+    ["Tela adhesiva",1,"num"]
   ]
 },
 {
   titulo:"🚺 GINECO - OBSTÉTRICO",
   items:[
-    ["Kit ginecológico",1,"num"]
+    ["Kit ginecológico",1,"bool"]
   ]
 },
 {
@@ -101,31 +101,31 @@ const secciones = [
 {
   titulo:"🫁 VÍA AÉREA Y OXIGENOTERAPIA",
   items:[
-    ["Cánula nasofaríngea 3.5",1,"num"],
-    ["Cánula nasofaríngea 4.0",1,"num"],
-    ["Cánula nasofaríngea 4.5",1,"num"],
-    ["Cánula nasofaríngea 5.5",1,"num"],
-    ["Cánula nasofaríngea 6.5",1,"num"],
-    ["Cánula nasofaríngea 7.0",1,"num"],
-    ["Cánula nasofaríngea 7.5",1,"num"],
-    ["Cánula nasofaríngea 8.0",1,"num"],
-    ["Cánula nasofaríngea 9.0",1,"num"],
+    ["Cánula nasofaríngea 3.5",1,"bool"],
+    ["Cánula nasofaríngea 4.0",1,"bool"],
+    ["Cánula nasofaríngea 4.5",1,"bool"],
+    ["Cánula nasofaríngea 5.5",1,"bool"],
+    ["Cánula nasofaríngea 6.5",1,"bool"],
+    ["Cánula nasofaríngea 7.0",1,"bool"],
+    ["Cánula nasofaríngea 7.5",1,"bool"],
+    ["Cánula nasofaríngea 8.0",1,"bool"],
+    ["Cánula nasofaríngea 9.0",1,"bool"],
 
-    ["Cánula orofaríngea 00",1,"num"],
-    ["Cánula orofaríngea 0",1,"num"],
-    ["Cánula orofaríngea 1",1,"num"],
-    ["Cánula orofaríngea 2",1,"num"],
-    ["Cánula orofaríngea 3",1,"num"],
-    ["Cánula orofaríngea 4",1,"num"],
-    ["Cánula orofaríngea 5",1,"num"],
-    ["Cánula orofaríngea 6",1,"num"],
+    ["Cánula orofaríngea 00",1,"bool"],
+    ["Cánula orofaríngea 0",1,"bool"],
+    ["Cánula orofaríngea 1",1,"bool"],
+    ["Cánula orofaríngea 2",1,"bool"],
+    ["Cánula orofaríngea 3",1,"bool"],
+    ["Cánula orofaríngea 4",1,"bool"],
+    ["Cánula orofaríngea 5",1,"bool"],
+    ["Cánula orofaríngea 6",1,"bool"],
 
-    ["Puntas nasales",5,"num"],
-    ["Mascarilla con reservorio",5,"num"],
-    ["Mascarilla simple",5,"num"],
-    ["BVM neonatal",1,"num"],
-    ["BVM pediátrico",1,"num"],
-    ["BVM adulto",1,"num"],
+    ["Puntas nasales",3,"num"],
+    ["Mascarilla con reservorio",3,"num"],
+    ["Mascarilla simple",3,"num"],
+    ["BVM neonatal",1,"bool"],
+    ["BVM pediátrico",1,"bool"],
+    ["BVM adulto",1,"bool"],
     ["Aspirador funcional",1,"bool"],
     ["Mascarillas laríngeas",1,"bool"]
   ]
@@ -133,23 +133,23 @@ const secciones = [
 {
   titulo:"💉 TERAPIA INTRAVENOSA",
   items:[
-    ["Normogotero",5,"num"],
+    ["Normogotero",3,"num"],
     ["Agujas hipodérmicas",3,"num"],
 
-    ["Catéter venoso #14",5,"num"],
-    ["Catéter venoso #16",5,"num"],
-    ["Catéter venoso #18",5,"num"],
-    ["Catéter venoso #19",5,"num"],
-    ["Catéter venoso #20",5,"num"],
-    ["Catéter venoso #21",5,"num"],
-    ["Catéter venoso #22",5,"num"],
-    ["Catéter venoso #24",5,"num"],
+    ["Catéter venoso #14",3,"num"],
+    ["Catéter venoso #16",3,"num"],
+    ["Catéter venoso #18",3,"num"],
+    ["Catéter venoso #19",3,"num"],
+    ["Catéter venoso #20",3,"num"],
+    ["Catéter venoso #21",3,"num"],
+    ["Catéter venoso #22",3,"num"],
+    ["Catéter venoso #24",3,"num"],
 
-    ["Jeringa insulina",5,"num"],
-    ["Jeringa 3 ml",5,"num"],
-    ["Jeringa 5 ml",5,"num"],
-    ["Jeringa 10 ml",5,"num"],
-    ["Jeringa 20 ml",5,"num"]
+    ["Jeringa insulina",3,"num"],
+    ["Jeringa 3 ml",3,"num"],
+    ["Jeringa 5 ml",3,"num"],
+    ["Jeringa 10 ml",3,"num"],
+    ["Jeringa 20 ml",3,"num"]
   ]
 },
 {
@@ -159,10 +159,10 @@ const secciones = [
     ["Cloruro de sodio 500 ml",3,"num"],
     ["Glucosa 5% 500 ml",3,"num"],
 
-    ["Hartmann 250 ml",5,"num"],
-    ["Cloruro de sodio 250 ml",5,"num"],
-    ["Glucosa 5% 250 ml",5,"num"],
-    ["Glucosa 50% 50 ml",5,"num"]
+    ["Hartmann 250 ml",3,"num"],
+    ["Cloruro de sodio 250 ml",3,"num"],
+    ["Glucosa 5% 250 ml",3,"num"],
+    ["Glucosa 50% 50 ml",3,"num"]
   ]
 },
 {
@@ -245,7 +245,7 @@ localStorage.setItem("ultimo", JSON.stringify({
 function pdfComparativo() {
   const r = JSON.parse(localStorage.getItem("ultimo"));
   if (!r) {
-    alert("⚠️ Primero guarda el conteo");
+    alert("⚠️ Primero guarda el conteo ⚠️");
     return;
   }
 
