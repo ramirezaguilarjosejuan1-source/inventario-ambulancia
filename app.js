@@ -293,20 +293,16 @@ function pdfComparativo() {
     alert("⚠️ Primero guarda el conteo ⚠️");
     return;
   }
-
   cargarImagenBase64("logo.png", function(logoBase64){
-    cargarImagenBase64("ambulancia.png", function(ambuBase64){
-
+  cargarImagenBase64("ambulancia.png", function(ambuBase64){
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
       /* ====== HEADER ROJO ====== */
       doc.setFillColor(200, 0, 0);
       doc.rect(0, 0, 210, 25, "F");
-
       doc.addImage(logoBase64, "PNG", 10, 5, 15, 15);
       doc.addImage(ambuBase64, "PNG", 185, 5, 15, 15);
-
       doc.setTextColor(255,255,255);
       doc.setFontSize(14);
       doc.text("CRUZ ROJA MEXICANA", 105, 12, { align:"center" });
@@ -317,7 +313,6 @@ function pdfComparativo() {
       let y = 35;
       doc.setTextColor(0,0,0);
       doc.setFontSize(11);
-
       doc.text(`Unidad: ${r.unidad}`, 14, y); y+=6;
       doc.text(`Guardia: ${r.guardia}`, 14, y); y+=6;
       doc.text(`Responsable: ${r.responsable || "No especificado"}`, 14, y); y+=6;
@@ -327,81 +322,33 @@ function pdfComparativo() {
       doc.setFillColor(200,0,0);
       doc.setTextColor(255,255,255);
       doc.rect(14, y-6, 182, 8, "F");
-
       doc.text("Material", 16, y);
       doc.text("Ideal", 120, y);
       doc.text("Actual", 145, y);
       doc.text("Estado", 170, y);
-
       y+=8;
       doc.setTextColor(0,0,0);
-
       r.datos.forEach(d=>{
         if(y > 270){
           doc.addPage();
           y = 20;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         if(d.actual < d.ideal){
           doc.setFillColor(255, 205, 210);
           doc.rect(14, y-6, 182, 8, "F");
           doc.text("FALTANTE", 168, y);
-        } else {
+        } 
+        else {
           doc.setFillColor(200, 230, 201);
           doc.rect(14, y-6, 182, 8, "F");
           doc.text("OK", 175, y);
         }
-
         doc.setTextColor(0,0,0);
         doc.text(d.nombre, 16, y);
         doc.text(String(d.ideal), 125, y);
         doc.text(String(d.actual), 150, y);
-
         y+=8;
       });
-
       doc.save(`Inventario_${r.unidad}.pdf`);
     });
   });
