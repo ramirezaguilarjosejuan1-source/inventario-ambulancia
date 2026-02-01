@@ -175,7 +175,22 @@ const secciones = [
     ["Salbutamol / Ipatropio",1,"bool"],
     ["Ácido acetilsalicílico 500mg",1,"bool"]
   ]
+},
+{
+  titulo:"🩹 EQUIPO DE BOTIQUÍN",
+  items:[
+    ["Gasas estériles",20,"num"],
+    ["Vendas elásticas",5,"num"],
+    ["Vendas triangulares",2,"num"],
+    ["Tela adhesiva",2,"num"],
+    ["Curitas",20,"num"],
+    ["Tijeras",1,"bool"],
+    ["Pinzas",1,"bool"],
+    ["Solución salina",2,"num"],
+    ["Antiséptico",1,"bool"]
+  ]
 }
+
 ];
 
 /* ====== CREAR FORMULARIO ====== */
@@ -217,13 +232,20 @@ function guardar(){
   const datos = [];
   let idx = 0;
 
+
   secciones.forEach(sec=>{
     sec.items.forEach(i=>{
-      datos.push({
-        nombre: i[0],
-        ideal: i[1],
-        actual: Number(document.getElementById("i"+idx).value || 0)
-      });
+      
+const actual = Number(document.getElementById("i"+idx).value || 0);
+const ideal = i[1];
+
+datos.push({
+  nombre: i[0],
+  ideal,
+  actual,
+  faltante: Math.max(ideal - actual, 0)
+});
+
       idx++;
     });
   });
