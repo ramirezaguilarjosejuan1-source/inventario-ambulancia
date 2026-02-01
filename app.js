@@ -30,8 +30,8 @@ const secciones = [
     ["Guantes de látex",10,"num"],
     ["Cubrebocas",10,"num"],
     ["Mascarilla N95",2,"num"],
-    ["Bote RPBI",1,"num"],
-    ["Bote basura común",1,"num"]
+    ["Bote RPBI",1,"bool"],
+    ["Bote basura común",1,"bool"]
   ]
 },
 {
