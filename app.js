@@ -38,7 +38,7 @@ const secciones = [
     ["Cubrebocas",10,"num"],
     ["Mascarilla N95",2,"num"],
     ["Bote RPBI",1,"boom"],
-    ["Bote basura común",1,"bool"]
+    ["Bote basura común",1,"bool"],
   ]
 },
 {
@@ -49,7 +49,7 @@ const secciones = [
     ["Sábana térmica",1,"bool"],
     ["Sábana para quemados",1,"bool"],
     ["Camilla marina",1,"bool"],
-    ["Carro camilla",1,"bool"]
+    ["Carro camilla",1,"bool"],
   ]
 },
 {
@@ -62,7 +62,7 @@ const secciones = [
     ["Tiras reactivas",10,"num"],
     ["Torundas",1,"bool"],
     ["Termómetro",1,"bool"],
-    ["Oxímetro",1,"bool"]
+    ["Oxímetro",1,"bool"],
   ]
 },
 {
@@ -90,7 +90,7 @@ const secciones = [
     ["Venda 10 cm",3,"num"],
     ["Venda 15 cm",3,"num"],
     ["Venda 30 cm",3,"num"],
-    ["Tela adhesiva",1,"bool"]
+    ["Tela adhesiva",1,"bool"],
   ]
 },
 {
@@ -102,7 +102,7 @@ const secciones = [
 {
   titulo:"🏷️ TRIAGE Y DESASTRES",
   items:[
-    ["Targets de triage",10,"num"]
+    ["Targets de triage",10,"num"],
   ]
 },
 {
