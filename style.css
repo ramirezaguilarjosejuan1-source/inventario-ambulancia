@@ -1,171 +1,182 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-
-body{
-  padding-top:5px;
-  margin:0;
-  padding:12px;
-  font-family:'Poppins', sans-serif;
-  background:#f4f4f4;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 0;
 }
 
-/* TÍTULOS */
-h1{
-  text-align:center;
-  color:#c62828;
-  margin-bottom:6px;
-  font-weight:700;
+.top-bar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #cc0000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-bottom: 2px solid #a30000;
 }
 
-.subtitulo{
-  text-align:center;
-  color:#c62828;
-  font-weight:600;
-  margin-bottom:4px;
+.logo-bar {
+    height: 50px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 50%;
 }
 
-
-.turno{
-  text-align:center;
-  color:#c62828;
-  font-weight:bold;
-  margin-bottom:12px;
+.bar-title {
+    text-align: center;
+    flex-grow: 1;
 }
 
-/* TARJETA */
-
-.card{
-  background:white;
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:14px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+.bar-title strong {
+    font-size: 1.2rem;
+    color: white;
 }
 
-/* INPUTS */
-select, input{
-  width:96%;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:14px;
-  border:1px solid #ddd;
-  font-size:15px;
-  background:#fff;
-  box-shadow: -3px 4px 0px 0px rgb(198 40 40 / 67%);
+.bar-title span {
+    font-size: 0.9rem;
+    color: #ffcccc;
 }
 
-/* BOTONES */
-.acciones button{
-  width:100%;
-  background:#c62828;
-  color:white;
-  border:none;
-  padding:14px;
-  margin-top:10px;
-  border-radius:16px;
-  font-size:16px;
-  font-weight:700;
-  box-shadow:0 4px 8px rgba(0,0,0,0.25);
+h1 {
+    text-align: center;
+    color: #cc0000;
+    font-size: 2.5rem;
+    margin-bottom: 5px;
 }
 
-
-.acciones button:active{
-  background:#b71c1c;
+.subtitulo {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 30px;
 }
 
-.top-bar{
-  background:#b71c1c;
-  color:white;
-  text-align:center;
-  padding:10px;
-  font-weight:700;
-  font-size:15px;
-  position:sticky;
-  top:0;
-  z-index:100;
-  box-shadow:0 3px 6px rgba(0,0,0,0.25);
+.turno {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #cc0000;
+    background-color: #fff;
+    border: 2px solid #cc0000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 20px auto;
+    width: fit-content;
 }
 
-/* ===== BARRA ROJA CON LOGOS ===== */
-.top-bar{
-  position:sticky;
-  top:0;
-  z-index:100;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  background:#b71c1c;
-  color:white;
-
-  padding:8px 10px;
-  box-shadow:0 3px 6px rgba(0,0,0,0.25);
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
 }
 
-.logo-bar{
-  height:36px;
-  width:auto;
+.filtros {
+    display: flex;
+    gap: 10px;
 }
 
-.bar-title{
-  text-align:center;
-  flex:1;
-  line-height:1.2;
+.filtros select {
+    flex: 1;
+    min-width: 120px;
 }
 
-.bar-title strong{
-  font-size:15px;
-  font-weight:700;
+@media (max-width: 600px) {
+    .filtros {
+        flex-direction: column;
+    }
 }
 
-.bar-title span{
-  font-size:12px;
-  font-weight:500;
-  }
-
-/* === CORRECCIÓN LOGOS BARRA SUPERIOR === */
-.top-bar img{
-  width:auto !important;
-  max-width:40px !important;
-  height:auto !important;
-  object-fit:contain;
+.header {
+    background-color: #cc0000;
+    color: white;
+    padding: 15px;
+    border-radius: 8px 8px 0 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
 
-.top-bar{
-  min-height:60px;
+.header:hover {
+    background-color: #a30000;
 }
 
-/* ================================
-   LOGOS BARRA SUPERIOR (FIX FINAL)
-   ================================ */
-
-.top-bar img,
-.header img{
-  width: 40px;
-  max-width: 40px;
-  height: 40px;
-  object-fit: contain;
-  display: block;
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Evita que crezcan por reglas globales */
-img{
-  max-width: 100%;
-  height: auto;
+.item:last-child {
+    border-bottom: none;
 }
-.top-bar,
-.header{
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #c62828;
-  padding: 10px 12px;
+
+select, input {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
-@media (max-width: 480px){
-  .top-bar img,
-  .header img{
-    width: 34px;
-    height: 34px;
-  }
+
+select:focus, input:focus {
+    border-color: #cc0000;
+    box-shadow: 0 0 8px rgba(204, 0, 0, 0.2);
+    outline: none;
+}
+
+input[type="number"] {
+    width: 80px;
+    text-align: center;
+}
+
+#Responsable {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (min-width: 600px) {
+    .acciones {
+        flex-direction: row;
+    }
+    .acciones .card {
+        flex: 1;
+    }
 }
