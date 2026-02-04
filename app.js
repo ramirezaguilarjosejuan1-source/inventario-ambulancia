@@ -264,30 +264,30 @@ document.getElementById("Guardia").addEventListener("change", function() {
 
 /* ====== GUARDAR CONTEO ====== */
 function guardar() {
-  const responsable = document.getElementById("Responsable").value.trim();
+  const responsable = document.getElementById("Responsable").value.trim() || "No especificado";
   const unidad = document.getElementById("Unidad").value;
   const guardia = document.getElementById("Guardia").value;
 
-  if (!responsable) {
-    alert("⚠️ Por favor ingresa el nombre del responsable ⚠️");
-    return;
-  }
-
-  const datos = [];
+  const inventarioPorSeccion = [];
   let idx = 0;
 
   secciones.forEach(sec => {
+    const items = [];
     sec.items.forEach(i => {
       const actual = Number(document.getElementById("i" + idx).value || 0);
       const ideal = i[1];
 
-      datos.push({
+      items.push({
         nombre: i[0],
         ideal,
         actual,
         faltante: Math.max(ideal - actual, 0)
       });
       idx++;
+    });
+    inventarioPorSeccion.push({
+      titulo: sec.titulo,
+      items: items
     });
   });
 
@@ -296,7 +296,7 @@ function guardar() {
     guardia,
     responsable,
     fecha: new Date().toLocaleString(),
-    datos
+    secciones: inventarioPorSeccion
   }));
 
   salida.textContent = "✅ Conteo guardado correctamente";
@@ -347,35 +347,58 @@ async function pdfComparativo() {
     doc.text(`Fecha: ${r.fecha}`, 14, y); y += 10;
 
     /* ====== TABLA CON AUTOTABLE ====== */
-    const tableData = r.datos.map(d => [
-      d.nombre,
-      d.ideal,
-      d.actual,
-      d.actual < d.ideal ? "FALTANTE" : "OK"
-    ]);
+    const ambulanciaItems = [];
+    const botiquinItems = [];
 
-    doc.autoTable({
-      startY: y,
-      head: [['Material', 'Ideal', 'Actual', 'Estado']],
-      body: tableData,
-      theme: 'striped',
-      headStyles: { fillColor: [200, 0, 0] },
-      columnStyles: {
-        0: { cellWidth: 80 },
-        1: { halign: 'center' },
-        2: { halign: 'center' },
-        3: { halign: 'center', fontStyle: 'bold' }
-      },
-      didParseCell: function (data) {
-        if (data.section === 'body' && data.column.index === 3) {
-          if (data.cell.raw === 'FALTANTE') {
-            data.cell.styles.textColor = [200, 0, 0];
-          } else {
-            data.cell.styles.textColor = [0, 128, 0];
-          }
-        }
+    const seccionesData = r.secciones || [{ titulo: "General", items: r.datos || [] }];
+
+    seccionesData.forEach(sec => {
+      if (sec.titulo.includes("BOTIQUÍN")) {
+        botiquinItems.push(...sec.items);
+      } else {
+        ambulanciaItems.push(...sec.items);
       }
     });
+
+    const createTable = (data, title, startY) => {
+      doc.setFontSize(12);
+      doc.setTextColor(200, 0, 0);
+      doc.text(title, 14, startY);
+
+      const tableData = data.map(d => [
+        d.nombre,
+        d.ideal,
+        d.actual,
+        d.actual < d.ideal ? "FALTANTE" : "OK"
+      ]);
+
+      doc.autoTable({
+        startY: startY + 5,
+        head: [['Material', 'Ideal', 'Actual', 'Estado']],
+        body: tableData,
+        theme: 'striped',
+        headStyles: { fillColor: [200, 0, 0] },
+        columnStyles: {
+          0: { cellWidth: 80 },
+          1: { halign: 'center' },
+          2: { halign: 'center' },
+          3: { halign: 'center', fontStyle: 'bold' }
+        },
+        didParseCell: function (data) {
+          if (data.section === 'body' && data.column.index === 3) {
+            if (data.cell.raw === 'FALTANTE') {
+              data.cell.styles.textColor = [200, 0, 0];
+            } else {
+              data.cell.styles.textColor = [0, 128, 0];
+            }
+          }
+        }
+      });
+      return doc.lastAutoTable.finalY;
+    };
+
+    let nextY = createTable(ambulanciaItems, "INVENTARIO GENERAL DE AMBULANCIA", y);
+    createTable(botiquinItems, "INVENTARIO EQUIPO DE BOTIQUÍN", nextY + 15);
 
     doc.save(`Inventario_${r.unidad}.pdf`);
   } catch (error) {
