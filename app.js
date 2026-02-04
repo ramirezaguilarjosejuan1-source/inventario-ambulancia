@@ -372,17 +372,20 @@ async function pdfComparativo() {
       doc.setTextColor(200, 0, 0);
       doc.text(title, 14, startY);
 
-      const tableData = data.map(d => [
-        d.nombre,
-        d.ideal,
-        d.actual,
-        Math.max(d.ideal - d.actual, 0),
-        d.actual < d.ideal ? "FALTANTE" : "OK"
-      ]);
+      const tableData = data.map(d => {
+        const missing = Math.max(d.ideal - d.actual, 0);
+        const status = missing > 0 ? `Faltan ${missing}` : "OK";
+        return [
+          d.nombre,
+          d.ideal,
+          d.actual,
+          status
+        ];
+      });
 
       doc.autoTable({
         startY: startY + 5,
-        head: [['Material', 'Ideal', 'Actual', 'Faltan', 'Estado']],
+        head: [['Material', 'Ideal', 'Actual', 'Estado']],
         body: tableData,
         theme: 'striped',
         headStyles: {
@@ -390,15 +393,14 @@ async function pdfComparativo() {
           halign: 'center'
         },
         columnStyles: {
-          0: { cellWidth: 70 },
+          0: { cellWidth: 80 },
           1: { halign: 'center' },
           2: { halign: 'center' },
-          3: { halign: 'center' },
-          4: { halign: 'center', fontStyle: 'bold' }
+          3: { halign: 'center', fontStyle: 'bold' }
         },
         didParseCell: function (data) {
-          if (data.section === 'body' && data.column.index === 4) {
-            if (data.cell.raw === 'FALTANTE') {
+          if (data.section === 'body' && data.column.index === 3) {
+            if (data.cell.raw.toString().startsWith('Faltan')) {
               data.cell.styles.textColor = [200, 0, 0];
             } else {
               data.cell.styles.textColor = [0, 128, 0];
