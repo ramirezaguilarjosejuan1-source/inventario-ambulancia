@@ -264,7 +264,14 @@ document.getElementById("Guardia").addEventListener("change", function() {
 
 /* ====== GUARDAR CONTEO ====== */
 function guardar() {
-  const responsable = document.getElementById("Responsable").value.trim() || "No especificado";
+  const responsable = document.getElementById("Responsable").value.trim();
+
+  if (!responsable) {
+    alert("⚠️ Por favor ingresa el nombre del responsable ⚠️");
+    document.getElementById("Responsable").focus();
+    return;
+  }
+
   const unidad = document.getElementById("Unidad").value;
   const guardia = document.getElementById("Guardia").value;
 
@@ -360,7 +367,7 @@ async function pdfComparativo() {
       }
     });
 
-    const createTable = (data, title, startY) => {
+    const createTable = (data, title, startY, forceCenter = false) => {
       doc.setFontSize(12);
       doc.setTextColor(200, 0, 0);
       doc.text(title, 14, startY);
@@ -369,23 +376,28 @@ async function pdfComparativo() {
         d.nombre,
         d.ideal,
         d.actual,
+        Math.max(d.ideal - d.actual, 0),
         d.actual < d.ideal ? "FALTANTE" : "OK"
       ]);
 
       doc.autoTable({
         startY: startY + 5,
-        head: [['Material', 'Ideal', 'Actual', 'Estado']],
+        head: [['Material', 'Ideal', 'Actual', 'Faltan', 'Estado']],
         body: tableData,
         theme: 'striped',
-        headStyles: { fillColor: [200, 0, 0] },
+        headStyles: {
+          fillColor: [200, 0, 0],
+          halign: 'center'
+        },
         columnStyles: {
-          0: { cellWidth: 80 },
+          0: { cellWidth: 70 },
           1: { halign: 'center' },
           2: { halign: 'center' },
-          3: { halign: 'center', fontStyle: 'bold' }
+          3: { halign: 'center' },
+          4: { halign: 'center', fontStyle: 'bold' }
         },
         didParseCell: function (data) {
-          if (data.section === 'body' && data.column.index === 3) {
+          if (data.section === 'body' && data.column.index === 4) {
             if (data.cell.raw === 'FALTANTE') {
               data.cell.styles.textColor = [200, 0, 0];
             } else {
@@ -398,7 +410,9 @@ async function pdfComparativo() {
     };
 
     let nextY = createTable(ambulanciaItems, "INVENTARIO GENERAL DE AMBULANCIA", y);
-    createTable(botiquinItems, "INVENTARIO EQUIPO DE BOTIQUÍN", nextY + 15);
+
+    doc.addPage();
+    createTable(botiquinItems, "INVENTARIO EQUIPO DE BOTIQUÍN", 20);
 
     doc.save(`Inventario_${r.unidad}.pdf`);
   } catch (error) {
