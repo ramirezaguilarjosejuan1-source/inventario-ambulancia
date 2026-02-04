@@ -1,8 +1,14 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    padding: 20px;
     margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .top-bar {
@@ -43,19 +49,6 @@ body {
     color: #ffcccc;
 }
 
-h1 {
-    text-align: center;
-    color: #cc0000;
-    font-size: 2.5rem;
-    margin-bottom: 5px;
-}
-
-.subtitulo {
-    text-align: center;
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 30px;
-}
 
 .turno {
     text-align: center;
@@ -142,6 +135,15 @@ select:focus, input:focus {
 input[type="number"] {
     width: 80px;
     text-align: center;
+}
+
+input[type="text"] {
+    width: 150px;
+}
+
+input[type="file"] {
+    width: 200px;
+    font-size: 0.8rem;
 }
 
 #Responsable {

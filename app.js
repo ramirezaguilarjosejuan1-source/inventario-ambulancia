@@ -6,6 +6,17 @@
 /* ====== SECCIONES E INSUMOS ====== */
 const secciones = [
 {
+  titulo:"🛡️ MATERIAL DE ATENCIÓN",
+  items:[
+    ["No. Manómetro", "", "text"],
+    ["No. Tanque de Oxígeno", "", "text"],
+    ["DAE / Life Pack", "", "text"],
+    ["Libras Tanque Fijo", 0, "num"],
+    ["Libras Tanque Portátil", 0, "num"],
+    ["Estado Tanque y DAE", null, "file"]
+  ]
+},
+{
   titulo:"🔥 SEGURIDAD Y BIOSEGURIDAD",
   items:[
     ["Extintor",1,"bool"],
@@ -239,16 +250,23 @@ secciones.forEach(sec => {
     const div = document.createElement("div");
     div.className = "item";
 
+    let inputHtml = "";
+    if (i[2] === "bool") {
+      inputHtml = `<select id="i${contador}">
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                   </select>`;
+    } else if (i[2] === "text") {
+      inputHtml = `<input type="text" id="i${contador}" placeholder="...">`;
+    } else if (i[2] === "file") {
+      inputHtml = `<input type="file" id="i${contador}" accept="image/*">`;
+    } else {
+      inputHtml = `<input type="number" id="i${contador}" value="0" min="0">`;
+    }
+
     div.innerHTML = `
       <label>${i[0]}</label>
-      ${
-        i[2] === "bool"
-        ? `<select id="i${contador}">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-          </select>`
-        : `<input type="number" id="i${contador}" value="0" min="0">`
-      }
+      ${inputHtml}
     `;
     content.appendChild(div);
     contador++;
@@ -262,8 +280,30 @@ document.getElementById("Guardia").addEventListener("change", function() {
   document.getElementById("turno-actual").textContent = this.value;
 });
 
+/* ====== PROCESAR IMAGEN (RESIZING) ====== */
+function procesarImagen(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const MAX_WIDTH = 600;
+        const scale = Math.min(1, MAX_WIDTH / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.6));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 /* ====== GUARDAR CONTEO ====== */
-function guardar() {
+async function guardar() {
   const responsable = document.getElementById("Responsable").value.trim();
 
   if (!responsable) {
@@ -272,31 +312,49 @@ function guardar() {
     return;
   }
 
+  salida.textContent = "⏳ Guardando...";
+  salida.style.display = "block";
+
   const unidad = document.getElementById("Unidad").value;
   const guardia = document.getElementById("Guardia").value;
 
   const inventarioPorSeccion = [];
   let idx = 0;
 
-  secciones.forEach(sec => {
+  for (const sec of secciones) {
     const items = [];
-    sec.items.forEach(i => {
-      const actual = Number(document.getElementById("i" + idx).value || 0);
+    for (const i of sec.items) {
+      const el = document.getElementById("i" + idx);
+      let valorActual;
+
+      if (i[2] === "file") {
+        if (el.files && el.files[0]) {
+          valorActual = await procesarImagen(el.files[0]);
+        } else {
+          valorActual = null;
+        }
+      } else if (i[2] === "text") {
+        valorActual = el.value || "";
+      } else {
+        valorActual = Number(el.value || 0);
+      }
+
       const ideal = i[1];
 
       items.push({
         nombre: i[0],
+        tipo: i[2] || "num",
         ideal,
-        actual,
-        faltante: Math.max(ideal - actual, 0)
+        actual: valorActual,
+        faltante: (typeof valorActual === 'number' && typeof ideal === 'number') ? Math.max(ideal - valorActual, 0) : 0
       });
       idx++;
-    });
+    }
     inventarioPorSeccion.push({
       titulo: sec.titulo,
       items: items
     });
-  });
+  }
 
   localStorage.setItem("ultimo", JSON.stringify({
     unidad,
@@ -356,31 +414,56 @@ async function pdfComparativo() {
     /* ====== TABLA CON AUTOTABLE ====== */
     const ambulanciaItems = [];
     const botiquinItems = [];
+    const materialAtencionItems = [];
+    let fotoEvidencia = null;
 
     const seccionesData = r.secciones || [{ titulo: "General", items: r.datos || [] }];
 
     seccionesData.forEach(sec => {
       if (sec.titulo.includes("BOTIQUÍN")) {
         botiquinItems.push(...sec.items);
+      } else if (sec.titulo.includes("MATERIAL DE ATENCIÓN")) {
+        sec.items.forEach(item => {
+          if (item.tipo === "file") {
+            fotoEvidencia = item.actual;
+          } else {
+            materialAtencionItems.push(item);
+          }
+        });
       } else {
         ambulanciaItems.push(...sec.items);
       }
     });
 
-    const createTable = (data, title, startY, forceCenter = false) => {
+    const createTable = (data, title, startY) => {
+      if (startY > 270) {
+        doc.addPage();
+        startY = 20;
+      }
       doc.setFontSize(12);
       doc.setTextColor(200, 0, 0);
       doc.text(title, 14, startY);
 
       const tableData = data.map(d => {
-        const missing = Math.max(d.ideal - d.actual, 0);
-        const status = missing > 0 ? `Faltan ${missing}` : "OK";
-        return [
-          d.nombre,
-          d.ideal,
-          d.actual,
-          status
-        ];
+        let idealVal = d.ideal;
+        let actualVal = d.actual;
+        let status = "OK";
+
+        if (d.tipo === "bool") {
+          idealVal = d.ideal ? "Sí" : "No";
+          actualVal = d.actual ? "Sí" : "No";
+          status = (d.ideal && !d.actual) ? "Faltante" : "OK";
+        } else if (d.tipo === "text") {
+          idealVal = "-";
+          actualVal = d.actual || "-";
+          status = "Info";
+        } else {
+          // num
+          const missing = Math.max(d.ideal - d.actual, 0);
+          status = missing > 0 ? `Faltan ${missing}` : "OK";
+        }
+
+        return [d.nombre, idealVal, actualVal, status];
       });
 
       doc.autoTable({
@@ -400,10 +483,13 @@ async function pdfComparativo() {
         },
         didParseCell: function (data) {
           if (data.section === 'body' && data.column.index === 3) {
-            if (data.cell.raw.toString().startsWith('Faltan')) {
+            const val = data.cell.raw.toString();
+            if (val.startsWith('Faltan') || val === 'Faltante') {
               data.cell.styles.textColor = [200, 0, 0];
-            } else {
+            } else if (val === 'OK') {
               data.cell.styles.textColor = [0, 128, 0];
+            } else {
+              data.cell.styles.textColor = [0, 0, 0];
             }
           }
         }
@@ -411,10 +497,24 @@ async function pdfComparativo() {
       return doc.lastAutoTable.finalY;
     };
 
-    let nextY = createTable(ambulanciaItems, "INVENTARIO GENERAL DE AMBULANCIA", y);
+    let nextY = y;
+    if (materialAtencionItems.length > 0) {
+      nextY = createTable(materialAtencionItems, "EQUIPO Y MATERIAL DE ATENCIÓN", nextY);
+      nextY += 10;
+    }
+
+    nextY = createTable(ambulanciaItems, "INVENTARIO GENERAL DE AMBULANCIA", nextY);
 
     doc.addPage();
     createTable(botiquinItems, "INVENTARIO EQUIPO DE BOTIQUÍN", 20);
+
+    if (fotoEvidencia) {
+      doc.addPage();
+      doc.setTextColor(200, 0, 0);
+      doc.setFontSize(14);
+      doc.text("EVIDENCIA FOTOGRÁFICA (TANQUE Y DAE)", 105, 20, { align: "center" });
+      doc.addImage(fotoEvidencia, "JPEG", 15, 30, 180, 135);
+    }
 
     doc.save(`Inventario_${r.unidad}.pdf`);
   } catch (error) {
