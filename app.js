@@ -1,18 +1,3 @@
-/-----------------------------------------------------------/
-function cargarImagenBase64(src, callback){
-  const img = new Image();
-  img.crossOrigin = "Anonymous";
-  img.onload = function(){
-    const canvas = document.createElement("canvas");
-    canvas.width = this.width;
-    canvas.height = this.height;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(this,0,0);
-    callback(canvas.toDataURL("image/png"));
-  };
-  img.src = src;
-}
-
 /************************************************
  * INVENTARIO AMBULANCIA – CRUZ ROJA
  * Autor del sistema: Jose Juan Ramirez Aguilar
@@ -171,7 +156,7 @@ const secciones = [
     ["Atropina",3,"num"],
     ["Epinefrina",3,"num"],
     ["Isosorbida / Trinitrato",1,"bool"],
-    ["Salbutamol / Ipatropio",1,"bool"],
+    ["Salbutamol / Ipratropio",1,"bool"],
     ["Ácido acetilsalicílico 500mg",1,"bool"]
   ]
 },
@@ -215,19 +200,44 @@ const secciones = [
 
 ];
 
+/* ====== CARGAR IMAGEN PROMISE ====== */
+function cargarImagenBase64(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = function() {
+      const canvas = document.createElement("canvas");
+      canvas.width = this.width;
+      canvas.height = this.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(this, 0, 0);
+      resolve(canvas.toDataURL("image/png"));
+    };
+    img.onerror = () => reject(new Error(`No se pudo cargar la imagen: ${src}`));
+    img.src = src;
+  });
+}
+
 /* ====== CREAR FORMULARIO ====== */
 const form = document.getElementById("formulario");
 const salida = document.getElementById("salida");
 let contador = 0;
 
-secciones.forEach(sec=>{
-  const h = document.createElement("h2");
-  h.textContent = sec.titulo;
-  form.appendChild(h);
+secciones.forEach(sec => {
+  const card = document.createElement("div");
+  card.className = "card";
 
-  sec.items.forEach(i=>{
+  const h = document.createElement("div");
+  h.className = "header";
+  h.textContent = sec.titulo;
+  card.appendChild(h);
+
+  const content = document.createElement("div");
+  content.className = "content";
+
+  sec.items.forEach(i => {
     const div = document.createElement("div");
-    div.className = "fila";
+    div.className = "item";
 
     div.innerHTML = `
       <label>${i[0]}</label>
@@ -237,119 +247,139 @@ secciones.forEach(sec=>{
             <option value="1">Sí</option>
             <option value="0">No</option>
           </select>`
-        : `<input type="number" id="i${contador}" placeholder="Cantidad">`
+        : `<input type="number" id="i${contador}" value="0" min="0">`
       }
     `;
-    form.appendChild(div);
+    content.appendChild(div);
     contador++;
   });
+  card.appendChild(content);
+  form.appendChild(card);
+});
+
+/* ====== EVENTOS ====== */
+document.getElementById("Guardia").addEventListener("change", function() {
+  document.getElementById("turno-actual").textContent = this.value;
 });
 
 /* ====== GUARDAR CONTEO ====== */
-function guardar(){
-  const responsable = document.getElementById("Responsable").value;
+function guardar() {
+  const responsable = document.getElementById("Responsable").value.trim();
   const unidad = document.getElementById("Unidad").value;
   const guardia = document.getElementById("Guardia").value;
+
+  if (!responsable) {
+    alert("⚠️ Por favor ingresa el nombre del responsable ⚠️");
+    return;
+  }
 
   const datos = [];
   let idx = 0;
 
+  secciones.forEach(sec => {
+    sec.items.forEach(i => {
+      const actual = Number(document.getElementById("i" + idx).value || 0);
+      const ideal = i[1];
 
-  secciones.forEach(sec=>{
-    sec.items.forEach(i=>{
-      
-const actual = Number(document.getElementById("i"+idx).value || 0);
-const ideal = i[1];
-
-datos.push({
-  nombre: i[0],
-  ideal,
-  actual,
-  faltante: Math.max(ideal - actual, 0)
-});
-
-
+      datos.push({
+        nombre: i[0],
+        ideal,
+        actual,
+        faltante: Math.max(ideal - actual, 0)
+      });
       idx++;
     });
   });
 
-localStorage.setItem("ultimo", JSON.stringify({
-  unidad,
-  guardia,
-  responsable,
-  fecha: new Date().toLocaleString(),
-  datos
-}));
+  localStorage.setItem("ultimo", JSON.stringify({
+    unidad,
+    guardia,
+    responsable,
+    fecha: new Date().toLocaleString(),
+    datos
+  }));
 
+  salida.textContent = "✅ Conteo guardado correctamente";
+  salida.style.color = "green";
+  salida.style.fontWeight = "bold";
+  salida.style.textAlign = "center";
+  salida.style.display = "block";
+  salida.style.marginTop = "10px";
 
-
-  salida.textContent = " Conteo guardado correctamente";
+  setTimeout(() => { salida.textContent = ""; }, 3000);
 }
 
-/* ====== PDF COMPARATIVO PREMIUM ====== */
-function pdfComparativo() {
+/* ====== PDF COMPARATIVO PREMIUM CON AUTOTABLE ====== */
+async function pdfComparativo() {
   const r = JSON.parse(localStorage.getItem("ultimo"));
   if (!r) {
     alert("⚠️ Primero guarda el conteo ⚠️");
     return;
   }
-  cargarImagenBase64("logo.png", function(logoBase64){
-  cargarImagenBase64("ambulancia.png", function(ambuBase64){
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
 
-      /* ====== HEADER ROJO ====== */
-      doc.setFillColor(200, 0, 0);
-      doc.rect(0, 0, 210, 25, "F");
-      doc.addImage(logoBase64, "PNG", 10, 5, 15, 15);
-      doc.addImage(ambuBase64, "PNG", 185, 5, 15, 15);
-      doc.setTextColor(255,255,255);
-      doc.setFontSize(14);
-      doc.text("CRUZ ROJA MEXICANA", 105, 12, { align:"center" });
-      doc.setFontSize(11);
-      doc.text("Inventario de Ambulancia", 105, 18, { align:"center" });
+  try {
+    const [logoBase64, ambuBase64] = await Promise.all([
+      cargarImagenBase64("logo.png"),
+      cargarImagenBase64("ambulancia.png")
+    ]);
 
-      /* ====== DATOS GENERALES ====== */
-      let y = 35;
-      doc.setTextColor(0,0,0);
-      doc.setFontSize(11);
-      doc.text(`Unidad: ${r.unidad}`, 14, y); y+=6;
-      doc.text(`Guardia: ${r.guardia}`, 14, y); y+=6;
-      doc.text(`Responsable: ${r.responsable || "No especificado"}`, 14, y); y+=6;
-      doc.text(`Fecha: ${r.fecha}`, 14, y); y+=10;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-      /* ====== TABLA ====== */
-      doc.setFillColor(200,0,0);
-      doc.setTextColor(255,255,255);
-      doc.rect(14, y-6, 182, 8, "F");
-      doc.text("Material", 16, y);
-      doc.text("Ideal", 120, y);
-      doc.text("Actual", 145, y);
-      doc.text("Estado", 170, y);
-      y+=8;
-      doc.setTextColor(0,0,0);
-      r.datos.forEach(d=>{
-        if(y > 270){
-          doc.addPage();
-          y = 20;
+    /* ====== HEADER ROJO ====== */
+    doc.setFillColor(200, 0, 0);
+    doc.rect(0, 0, 210, 25, "F");
+    doc.addImage(logoBase64, "PNG", 10, 5, 15, 15);
+    doc.addImage(ambuBase64, "PNG", 185, 5, 15, 15);
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14);
+    doc.text("CRUZ ROJA MEXICANA", 105, 12, { align: "center" });
+    doc.setFontSize(11);
+    doc.text("Inventario de Ambulancia", 105, 18, { align: "center" });
+
+    /* ====== DATOS GENERALES ====== */
+    let y = 35;
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(11);
+    doc.text(`Unidad: ${r.unidad}`, 14, y); y += 6;
+    doc.text(`Guardia: ${r.guardia}`, 14, y); y += 6;
+    doc.text(`Responsable: ${r.responsable}`, 14, y); y += 6;
+    doc.text(`Fecha: ${r.fecha}`, 14, y); y += 10;
+
+    /* ====== TABLA CON AUTOTABLE ====== */
+    const tableData = r.datos.map(d => [
+      d.nombre,
+      d.ideal,
+      d.actual,
+      d.actual < d.ideal ? "FALTANTE" : "OK"
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [['Material', 'Ideal', 'Actual', 'Estado']],
+      body: tableData,
+      theme: 'striped',
+      headStyles: { fillColor: [200, 0, 0] },
+      columnStyles: {
+        0: { cellWidth: 80 },
+        1: { halign: 'center' },
+        2: { halign: 'center' },
+        3: { halign: 'center', fontStyle: 'bold' }
+      },
+      didParseCell: function (data) {
+        if (data.section === 'body' && data.column.index === 3) {
+          if (data.cell.raw === 'FALTANTE') {
+            data.cell.styles.textColor = [200, 0, 0];
+          } else {
+            data.cell.styles.textColor = [0, 128, 0];
+          }
         }
-        if(d.actual < d.ideal){
-          doc.setFillColor(255, 205, 210);
-          doc.rect(14, y-6, 182, 8, "F");
-          doc.text("FALTANTE", 168, y);
-        } 
-        else {
-          doc.setFillColor(200, 230, 201);
-          doc.rect(14, y-6, 182, 8, "F");
-          doc.text("OK", 175, y);
-        }
-        doc.setTextColor(0,0,0);
-        doc.text(d.nombre, 16, y);
-        doc.text(String(d.ideal), 125, y);
-        doc.text(String(d.actual), 150, y);
-        y+=8;
-      });
-      doc.save(`Inventario_${r.unidad}.pdf`);
+      }
     });
-  });
+
+    doc.save(`Inventario_${r.unidad}.pdf`);
+  } catch (error) {
+    console.error(error);
+    alert("Hubo un problema al generar el PDF. Verifica que las imágenes existan.");
+  }
 }
