@@ -288,13 +288,13 @@ function procesarImagen(file) {
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement("canvas");
-        const MAX_WIDTH = 600;
+        const MAX_WIDTH = 1024;
         const scale = Math.min(1, MAX_WIDTH / img.width);
         canvas.width = img.width * scale;
         canvas.height = img.height * scale;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", 0.6));
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
       };
       img.src = e.target.result;
     };
@@ -304,12 +304,38 @@ function procesarImagen(file) {
 
 /* ====== GUARDAR CONTEO ====== */
 async function guardar() {
-  const responsable = document.getElementById("Responsable").value.trim();
+  const responsableInput = document.getElementById("Responsable");
+  const responsable = responsableInput.value.trim();
 
   if (!responsable) {
     alert("⚠️ Por favor ingresa el nombre del responsable ⚠️");
-    document.getElementById("Responsable").focus();
+    responsableInput.style.borderColor = "red";
+    responsableInput.focus();
     return;
+  }
+  responsableInput.style.borderColor = "";
+
+  // Validar campos de Material de Atención (Sección 0)
+  let idxCheck = 0;
+  for (let sIdx = 0; sIdx < secciones.length; sIdx++) {
+    const sec = secciones[sIdx];
+    for (let iIdx = 0; iIdx < sec.items.length; iIdx++) {
+      const itemDef = sec.items[iIdx];
+      if (sec.titulo.includes("MATERIAL DE ATENCIÓN")) {
+        const el = document.getElementById("i" + idxCheck);
+        if (itemDef[2] === "text" && !el.value.trim()) {
+          alert(`⚠️ El campo "${itemDef[0]}" es obligatorio ⚠️`);
+          el.focus();
+          return;
+        }
+        if (itemDef[2] === "file" && (!el.files || !el.files[0])) {
+          alert(`⚠️ La foto de "${itemDef[0]}" es obligatoria ⚠️`);
+          el.focus();
+          return;
+        }
+      }
+      idxCheck++;
+    }
   }
 
   salida.textContent = "⏳ Guardando...";
@@ -377,8 +403,21 @@ async function guardar() {
 /* ====== PDF COMPARATIVO PREMIUM CON AUTOTABLE ====== */
 async function pdfComparativo() {
   const r = JSON.parse(localStorage.getItem("ultimo"));
+  const responsableActual = document.getElementById("Responsable").value.trim();
+
   if (!r) {
     alert("⚠️ Primero guarda el conteo ⚠️");
+    return;
+  }
+
+  if (!responsableActual) {
+    alert("⚠️ Por favor ingresa el nombre del responsable antes de generar el PDF ⚠️");
+    document.getElementById("Responsable").focus();
+    return;
+  }
+
+  if (r.responsable !== responsableActual) {
+    alert("⚠️ El nombre del responsable ha cambiado. Por favor guarda el conteo nuevamente. ⚠️");
     return;
   }
 
@@ -515,6 +554,13 @@ async function pdfComparativo() {
       doc.text("EVIDENCIA FOTOGRÁFICA (TANQUE Y DAE)", 105, 20, { align: "center" });
       doc.addImage(fotoEvidencia, "JPEG", 15, 30, 180, 135);
     }
+
+    /* ====== MARCA DE AGUA FINAL ====== */
+    const pageCount = doc.internal.getNumberOfPages();
+    doc.setPage(pageCount);
+    doc.setTextColor(150, 150, 150);
+    doc.setFontSize(9);
+    doc.text("® Jose Juan Ramirez - Desarrollado por Jose Juan Ramirez", 105, 290, { align: "center" });
 
     doc.save(`Inventario_${r.unidad}.pdf`);
   } catch (error) {
