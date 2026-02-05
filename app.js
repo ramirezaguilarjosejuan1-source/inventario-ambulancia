@@ -47,6 +47,7 @@ const secciones = [
     ["Estetoscopio",1,"bool"],
     ["Glucómetro",1,"bool"],
     ["Tiras reactivas",10,"num"],
+    ["Lancetas",10,"num"],
     ["Torundas",1,"bool"],
     ["Termómetro",1,"bool"],
     ["Oxímetro",1,"bool"]
